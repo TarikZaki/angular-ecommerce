@@ -1,6 +1,6 @@
+import { Button } from '@org/ui';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { Button } from '@org/ui';
 import { Input } from '@org/ui';
 
 @Component({

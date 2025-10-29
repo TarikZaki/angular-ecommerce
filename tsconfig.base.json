@@ -16,7 +16,6 @@
     "baseUrl": ".",
     "paths": {
       "@org/auth": ["libs/auth/src/index.ts"],
-      "@org/blank": ["libs/blank/src/index.ts"],
       "@org/ui": ["libs/ui/src/index.ts"]
     }
   },
