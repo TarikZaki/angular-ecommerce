@@ -21,7 +21,10 @@
             "input": "apps/nxPractice/public"
           }
         ],
-        "styles": ["apps/nxPractice/src/styles.scss"]
+        "styles": [
+          "apps/nxPractice/src/styles.scss",
+          "node_modules/@fortawesome/fontawesome-free/css/all.min.css"
+        ]
       },
       "configurations": {
         "production": {

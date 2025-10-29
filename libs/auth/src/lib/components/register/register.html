@@ -1,0 +1,45 @@
+<section
+  class="bg-gray-100 md:w-1/2 mx-auto my-14 py-8 shadow-md border-gray-200 rounded-lg text-center"
+>
+  <h1>Register Now</h1>
+
+  <form
+    [formGroup]="registerForm"
+    (ngSubmit)="onSubmitForm()"
+    class="flex flex-col px-6 mt-6"
+  >
+    <lib-input
+      [control]="registerForm.get('name')"
+      [typeInput]="'text'"
+      [placeholder]="'write your name'"
+      [label]="'name'"
+    ></lib-input>
+    <lib-input
+      [control]="registerForm.get('email')"
+      [typeInput]="'email'"
+      [placeholder]="'write your email'"
+      [label]="'email'"
+    ></lib-input>
+
+    <lib-input
+      [control]="registerForm.get('password')"
+      [typeInput]="'password'"
+      [placeholder]="'write a password'"
+      [label]="'password'"
+    ></lib-input>
+
+    <lib-input
+      [control]="registerForm.get('rePassword')"
+      [typeInput]="'password'"
+      [placeholder]="'confirm the password'"
+      [label]="'repassword'"
+    ></lib-input>
+    <lib-input
+      [control]="registerForm.get('phone')"
+      [typeInput]="'tel'"
+      [placeholder]="'write a phone number'"
+      [label]="'phone'"
+    ></lib-input>
+    <lib-button>Register</lib-button>
+  </form>
+</section>

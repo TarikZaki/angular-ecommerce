@@ -1,0 +1,108 @@
+<nav
+  class="bg-gray-200 border-gray-200 dark:bg-gray-200 flex justify-between items-center p-4"
+>
+  <div class="flex items-center gap-3">
+    <img src="images/freshcart-logo.svg" alt="" class="" />
+    @if (isLoggedIn()) {
+    <ul class="hidden lg:flex items-center gap-6">
+      <li class="nav-link">
+        <a routerLink="home" routerLinkActive="nav-active">Home</a>
+      </li>
+      <li class="nav-link">
+        <a routerLink="products" routerLinkActive="nav-active">Products</a>
+      </li>
+      <li class="nav-link">
+        <a routerLink="categories" routerLinkActive="nav-active">Categories</a>
+      </li>
+      <li class="nav-link">
+        <a routerLink="brands" routerLinkActive="nav-active">Brands</a>
+      </li>
+    </ul>
+    }
+  </div>
+  <div>
+    <button (click)="toggleMenu()" class="lg:hidden flex flex-col gap-1">
+      <span class="w-6 h-0.5 bg-gray-800 block"></span>
+      <span class="w-6 h-0.5 bg-gray-800 block"></span>
+      <span class="w-6 h-0.5 bg-gray-800 block"></span>
+    </button>
+  </div>
+  <div class="hidden lg:flex items-center gap-3">
+    <ul class="flex items-center gap-6 mx-10">
+      <li><i class="fab fa-instagram nav-link"></i></li>
+      <li><i class="fa-brands fa-facebook nav-link"></i></li>
+      <li><i class="fab fa-tiktok nav-link"></i></li>
+      <li><i class="fab fa-twitter nav-link"></i></li>
+      <li><i class="fab fa-linkedin nav-link"></i></li>
+      <li><i class="fab fa-youtube nav-link"></i></li>
+    </ul>
+    @if (isLoggedIn()) {
+    <ul class="flex items-center gap-6">
+      <li class="nav-link">
+        <a routerLink="cart" routerLinkActive="nav-active">Cart</a>
+      </li>
+      <li class="nav-link">
+        <a routerLink="signout" routerLinkActive="nav-active">Signout</a>
+      </li>
+    </ul>
+    }@else {
+    <ul class="flex items-center gap-6">
+      <li class="nav-link">
+        <a routerLink="login" routerLinkActive="nav-active">Login</a>
+      </li>
+      <li class="nav-link">
+        <a routerLink="register" routerLinkActive="nav-active">Register</a>
+      </li>
+    </ul>
+    }
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+
+@if (isMenuOpen) {
+<div class="lg:hidden bg-gray-200 p-4 border-white border-2 rounded">
+  @if (isLoggedIn()) {
+  <ul class="flex flex-col gap-4 mb-6">
+    <li class="nav-link">
+      <a routerLink="home" routerLinkActive="nav-active">Home</a>
+    </li>
+    <li class="nav-link">
+      <a routerLink="products" routerLinkActive="nav-active">Products</a>
+    </li>
+    <li class="nav-link">
+      <a routerLink="categories" routerLinkActive="nav-active">Categories</a>
+    </li>
+    <li class="nav-link">
+      <a routerLink="brands" routerLinkActive="nav-active">Brands</a>
+    </li>
+  </ul>
+  }
+  <ul class="flex flex-wrap items-center gap-6 mb-6">
+    <li><i class="fab fa-instagram nav-link"></i></li>
+    <li><i class="fa-brands fa-facebook nav-link"></i></li>
+    <li><i class="fab fa-tiktok nav-link"></i></li>
+    <li><i class="fab fa-twitter nav-link"></i></li>
+    <li><i class="fab fa-linkedin nav-link"></i></li>
+    <li><i class="fab fa-youtube nav-link"></i></li>
+  </ul>
+  <!-- Auth Links -->
+  <ul class="flex flex-col gap-4">
+    @if (isLoggedIn()) {
+    <li class="nav-link">
+      <a routerLink="cart" routerLinkActive="nav-active">Cart</a>
+    </li>
+    <li class="nav-link">
+      <a routerLink="signout" routerLinkActive="nav-active">Signout</a>
+    </li>
+    }@else {
+    <li class="nav-link">
+      <a routerLink="login" routerLinkActive="nav-active">Login</a>
+    </li>
+    <li class="nav-link">
+      <a routerLink="register" routerLinkActive="nav-active">Register</a>
+    </li>
+    }
+  </ul>
+</div>
+}
