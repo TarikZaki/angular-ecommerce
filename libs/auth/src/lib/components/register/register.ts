@@ -7,6 +7,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { Button, Input } from '@org/ui';
+import { Subscription } from 'rxjs';
+
+import { Auth } from '../../services/auth';
 @Component({
   selector: 'lib-register',
   imports: [ReactiveFormsModule, Input, Button],
@@ -14,6 +17,7 @@ import { Button, Input } from '@org/ui';
   styleUrl: './register.css',
 })
 export class Register implements OnInit {
+  private readonly authService = inject(Auth);
   private readonly fb = inject(FormBuilder);
 
   registerForm!: FormGroup;
@@ -56,9 +60,23 @@ export class Register implements OnInit {
     const rePassword = group.get('rePassword')?.value;
     return password === rePassword ? null : { misMatch: true };
   }
+
+  newRes: Subscription = new Subscription();
   onSubmitForm() {
-    // if (this.registerForm.valid) {
-    // }
-    console.log(this.registerForm);
+    if (this.registerForm.valid) {
+      this.newRes?.unsubscribe();
+      this.newRes = this.authService
+        .registerForm(this.registerForm.value)
+        .subscribe({
+          next: (res) => {
+            console.log(res);
+          },
+          error: (err) => {
+            console.log(err);
+          },
+        });
+    } else {
+      this.registerForm.markAllAsTouched();
+    }
   }
 }
