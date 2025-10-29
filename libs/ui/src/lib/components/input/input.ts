@@ -1,14 +1,14 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  signal,
   input,
+  signal,
 } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
 @Component({
   selector: 'lib-input',
   imports: [
@@ -23,14 +23,13 @@ import { MatButtonModule } from '@angular/material/button';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Input {
-  typeInput = input('text', { alias: 'type' });
+  typeInput = input('text', {});
   placeholder = input('');
   label = input('');
   control = input<any>();
 
   hide = signal(true);
   clickEvent(event: MouseEvent) {
-    console.log('click event', event);
     this.hide.set(!this.hide());
     event.stopPropagation();
   }

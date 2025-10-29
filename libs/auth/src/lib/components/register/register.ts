@@ -1,4 +1,3 @@
-import { Input } from '@org/ui';
 import { Component, inject, OnInit } from '@angular/core';
 import {
   AbstractControl,
@@ -7,9 +6,10 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { Button, Input } from '@org/ui';
 @Component({
   selector: 'lib-register',
-  imports: [ReactiveFormsModule, Input],
+  imports: [ReactiveFormsModule, Input, Button],
   templateUrl: './register.html',
   styleUrl: './register.css',
 })
@@ -52,8 +52,8 @@ export class Register implements OnInit {
     this.initForm();
   }
   confirmPassword(group: AbstractControl) {
-    let password = group.get('password')?.value;
-    let rePassword = group.get('rePassword')?.value;
+    const password = group.get('password')?.value;
+    const rePassword = group.get('rePassword')?.value;
     return password === rePassword ? null : { misMatch: true };
   }
   onSubmitForm() {

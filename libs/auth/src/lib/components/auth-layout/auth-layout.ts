@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { Navbar } from '../../components/navbar/navbar';
 import { RouterOutlet } from '@angular/router';
+import { Navbar } from '@org/ui';
+
 @Component({
   selector: 'lib-auth-layout',
   imports: [Navbar, RouterOutlet],

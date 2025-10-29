@@ -10,36 +10,36 @@
   >
     <lib-input
       [control]="registerForm.get('name')"
-      [type]="'text'"
+      [typeInput]="'text'"
       [placeholder]="'write your name'"
       [label]="'Name'"
     ></lib-input>
     <lib-input
       [control]="registerForm.get('email')"
-      [type]="'email'"
+      [typeInput]="'email'"
       [placeholder]="'write your email'"
       [label]="'email'"
     ></lib-input>
 
     <lib-input
       [control]="registerForm.get('password')"
-      [type]="'password'"
+      [typeInput]="'password'"
       [placeholder]="'write a password'"
       [label]="'password'"
     ></lib-input>
 
     <lib-input
       [control]="registerForm.get('rePassword')"
-      [type]="'password'"
+      [typeInput]="'password'"
       [placeholder]="'confirm the password'"
       [label]="'repassword'"
     ></lib-input>
     <lib-input
       [control]="registerForm.get('phone')"
-      [type]="'tel'"
+      [typeInput]="'tel'"
       [placeholder]="'write a phone number'"
       [label]="'phone'"
     ></lib-input>
-    <button>click</button>
+    <lib-button>Register</lib-button>
   </form>
 </section>
