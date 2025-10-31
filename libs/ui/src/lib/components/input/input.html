@@ -4,28 +4,17 @@
     matInput
     [type]="typeInput() === 'password' ? (hide() ? 'password' : 'text') : typeInput()"
     [placeholder]="placeholder()"
-    [formControl]="control()"
+    [value]="value()"
+    [disabled]="disabled()"
+    (input)="onInputChange($event)"
+    (blur)="onBlur()"
   />
+  <!-- @if (emailFormControl.hasError('email') && !emailFormControl.hasError('required')) {
+      <mat-error>Please enter a valid email address</mat-error>
+    } -->
   @if (typeInput() === 'password') {
   <button mat-icon-button matSuffix (click)="clickEvent($event)" type="button">
     <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
   </button>
-  } @if (control()?.invalid && control()?.touched) { @if
-  (control()?.hasError('required')) {
-  <mat-error>{{ label() }} is required</mat-error>
-  } @if (control()?.hasError('email')) {
-  <mat-error>Please enter a valid email</mat-error>
-  } @if (control()?.hasError('minlength')) {
-  <mat-error>
-    Minimum length is {{ control()?.getError('minlength')?.requiredLength }}
-    characters
-  </mat-error>
-  } @if (control()?.hasError('maxlength')) {
-  <mat-error>
-    Maximum length is {{ control()?.getError('maxlength')?.requiredLength }}
-    characters
-  </mat-error>
-  } @if (control()?.hasError('pattern')) {
-  <mat-error>Invalid format</mat-error>
-  } }
+  }
 </mat-form-field>

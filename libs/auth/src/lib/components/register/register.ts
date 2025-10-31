@@ -1,8 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import {
   AbstractControl,
-  FormBuilder,
-  FormGroup,
+  NonNullableFormBuilder,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -18,42 +17,33 @@ import { Auth } from '../../services/auth';
 })
 export class Register implements OnInit {
   private readonly authService = inject(Auth);
-  private readonly fb = inject(FormBuilder);
+  private readonly fb = inject(NonNullableFormBuilder);
 
-  registerForm!: FormGroup;
+  registerForm = this.fb.group(
+    {
+      name: this.fb.control('', [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(20),
+      ]),
 
-  initForm() {
-    this.registerForm = this.fb.group(
-      {
-        name: [
-          null,
-          [
-            Validators.required,
-            Validators.minLength(2),
-            Validators.maxLength(20),
-          ],
-        ],
-        email: [null, [Validators.required, Validators.email]],
-        password: [
-          null,
-          [
-            Validators.required,
-            Validators.minLength(6),
-            Validators.maxLength(20),
-          ],
-        ],
-        rePassword: [null, [Validators.required]],
-        phone: [
-          null,
-          [Validators.required, Validators.pattern(/^01[0125][0-9]{8}$/)],
-        ],
-      },
-      { validators: this.confirmPassword }
-    );
-  }
+      email: this.fb.control('', [Validators.required, Validators.email]),
+      password: this.fb.control('', [
+        Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(20),
+      ]),
+      rePassword: this.fb.control('', [Validators.required]),
+      phone: this.fb.control('', [
+        Validators.required,
+        Validators.pattern(/^01[0125][0-9]{8}$/),
+      ]),
+    },
+    { validators: this.confirmPassword }
+  );
 
   ngOnInit() {
-    this.initForm();
+    console.log('hoh');
   }
   confirmPassword(group: AbstractControl) {
     const password = group.get('password')?.value;
@@ -66,7 +56,7 @@ export class Register implements OnInit {
     if (this.registerForm.valid) {
       this.newRes?.unsubscribe();
       this.newRes = this.authService
-        .registerForm(this.registerForm.value)
+        .registerForm(this.registerForm.getRawValue())
         .subscribe({
           next: (res) => {
             console.log(res);
