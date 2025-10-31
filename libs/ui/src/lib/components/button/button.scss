@@ -6,14 +6,14 @@
   color: #fff;
   cursor: pointer;
   transition: all 0.5s;
-}
-.btn-main:hover {
-  background-color: #04c704;
-}
-.btn-main:disabled {
-  cursor: not-allowed;
-  background-color: #ccc;
-}
-.btn-main:disabled:hover {
-  background-color: #ccc;
+  &:hover {
+    background-color: #04c704;
+  }
+  &:disabled {
+    cursor: not-allowed;
+    background-color: #ccc;
+  }
+  &:disabled:hover {
+    background-color: #ccc;
+  }
 }
