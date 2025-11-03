@@ -9,10 +9,12 @@
     (input)="onInputChange($event)"
     (blur)="onBlur()"
   />
-  <!-- @if (emailFormControl.hasError('email') && !emailFormControl.hasError('required')) {
-      <mat-error>Please enter a valid email address</mat-error>
-    } -->
-  @if (typeInput() === 'password') {
+
+  @if (hasError) {
+  <div class="text-red-600 text-md mt-1">
+    {{ ngControl?.control?.errors | errorMessage : label() }}
+  </div>
+  } @if (typeInput() === 'password') {
   <button mat-icon-button matSuffix (click)="clickEvent($event)" type="button">
     <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
   </button>

@@ -46,9 +46,22 @@ export class Register implements OnInit {
     console.log('hoh');
   }
   confirmPassword(group: AbstractControl) {
-    const password = group.get('password')?.value;
-    const rePassword = group.get('rePassword')?.value;
-    return password === rePassword ? null : { misMatch: true };
+    const password = group.get('password');
+    const rePassword = group.get('rePassword');
+
+    if (!password || !rePassword) return null;
+
+    if (rePassword.errors && !rePassword.errors['misMatch']) {
+      return null;
+    }
+
+    if (password.value !== rePassword.value) {
+      rePassword.setErrors({ misMatch: true });
+    } else {
+      rePassword.setErrors(null);
+    }
+
+    return null;
   }
 
   newRes: Subscription = new Subscription();
