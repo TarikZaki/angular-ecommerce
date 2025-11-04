@@ -29,7 +29,7 @@ import { ErrorMessagePipe } from '../../pipes/error-message-pipe';
   ],
   templateUrl: './input.html',
   styleUrl: './input.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class Input implements ControlValueAccessor {
   typeInput = input('text', {});

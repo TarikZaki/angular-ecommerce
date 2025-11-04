@@ -12,7 +12,7 @@
 
   @if (hasError) {
   <div class="text-red-600 text-md mt-1">
-    {{ ngControl?.control?.errors | errorMessage : label() }}
+    <pre> {{ ngControl?.control?.errors | errorMessage : label() }}</pre>
   </div>
   } @if (typeInput() === 'password') {
   <button mat-icon-button matSuffix (click)="clickEvent($event)" type="button">

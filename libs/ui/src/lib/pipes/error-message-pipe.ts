@@ -13,32 +13,44 @@ export class ErrorMessagePipe implements PipeTransform {
   ): string {
     if (!errors) return '';
 
+    const messages: string[] = [];
+
     if (errors['required']) {
-      return `${fieldLabel} is required`;
+      messages.push(`${fieldLabel} is required`);
     }
 
     if (errors['email']) {
-      return 'Please enter a valid email address';
+      messages.push('Please enter a valid email address');
     }
 
     if (errors['minlength']) {
       const requiredLength = errors['minlength'].requiredLength;
-      return `${fieldLabel} must be at least ${requiredLength} characters`;
+      messages.push(
+        `${fieldLabel} must be at least ${requiredLength} characters`
+      );
     }
 
     if (errors['maxlength']) {
       const requiredLength = errors['maxlength'].requiredLength;
-      return `${fieldLabel} must not exceed ${requiredLength} characters`;
+      messages.push(
+        `${fieldLabel} must not exceed ${requiredLength} characters`
+      );
     }
 
     if (errors['pattern']) {
-      return `Invalid ${fieldLabel.toLowerCase()} format`;
+      messages.push(`Invalid ${fieldLabel.toLowerCase()} format`);
     }
 
     if (errors['misMatch']) {
-      return 'Passwords do not match';
+      messages.push('Passwords do not match');
     }
 
-    return 'Invalid input';
+    // ✅ لو فيه error مش معروف
+    if (messages.length === 0) {
+      messages.push('Invalid input');
+    }
+
+    // لو فيه أكثر من error، نعرضهم مفصولين بـ سطر جديد
+    return messages.join('\n ');
   }
 }

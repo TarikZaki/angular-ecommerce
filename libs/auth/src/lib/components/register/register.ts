@@ -1,6 +1,5 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
-  AbstractControl,
   NonNullableFormBuilder,
   ReactiveFormsModule,
   Validators,
@@ -9,13 +8,14 @@ import { Button, Input } from '@org/ui';
 import { Subscription } from 'rxjs';
 
 import { Auth } from '../../services/auth';
+import { confirmPasswordValidator } from '../../validators/confirm-password.validator';
 @Component({
   selector: 'lib-register',
   imports: [ReactiveFormsModule, Input, Button],
   templateUrl: './register.html',
   styleUrl: './register.css',
 })
-export class Register implements OnInit {
+export class Register {
   private readonly authService = inject(Auth);
   private readonly fb = inject(NonNullableFormBuilder);
 
@@ -23,8 +23,8 @@ export class Register implements OnInit {
     {
       name: this.fb.control('', [
         Validators.required,
-        Validators.minLength(2),
-        Validators.maxLength(20),
+        Validators.minLength(10),
+        Validators.maxLength(5),
       ]),
 
       email: this.fb.control('', [Validators.required, Validators.email]),
@@ -39,30 +39,8 @@ export class Register implements OnInit {
         Validators.pattern(/^01[0125][0-9]{8}$/),
       ]),
     },
-    { validators: this.confirmPassword }
+    { validators: confirmPasswordValidator('password', 'rePassword') }
   );
-
-  ngOnInit() {
-    console.log('hoh');
-  }
-  confirmPassword(group: AbstractControl) {
-    const password = group.get('password');
-    const rePassword = group.get('rePassword');
-
-    if (!password || !rePassword) return null;
-
-    if (rePassword.errors && !rePassword.errors['misMatch']) {
-      return null;
-    }
-
-    if (password.value !== rePassword.value) {
-      rePassword.setErrors({ misMatch: true });
-    } else {
-      rePassword.setErrors(null);
-    }
-
-    return null;
-  }
 
   newRes: Subscription = new Subscription();
   onSubmitForm() {
