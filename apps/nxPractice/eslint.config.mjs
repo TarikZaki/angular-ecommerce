@@ -5,8 +5,10 @@ export default [
   ...baseConfig,
   ...nx.configs['flat/angular'],
   ...nx.configs['flat/angular-template'],
+
   {
     files: ['**/*.ts'],
+    ignores: ['**/*.spec.ts'],
     rules: {
       '@angular-eslint/directive-selector': [
         'error',
@@ -27,8 +29,13 @@ export default [
     },
   },
   {
-    files: ['**/*.html'],
-    // Override or add rules here
-    rules: {},
+    ignores: ['**/*.html'],
+  },
+
+  {
+    files: ['**/*.js'],
+    rules: {
+      '@typescript-eslint/no-require-imports': 'off',
+    },
   },
 ];

@@ -1,48 +1,45 @@
-import nx from '@nx/eslint-plugin';
-import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import js from '@eslint/js';
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
+import jsdoc from 'eslint-plugin-jsdoc';
+import { defineConfig } from 'eslint/config';
 
-export default [
-  ...nx.configs['flat/base'],
-  ...nx.configs['flat/typescript'],
-  ...nx.configs['flat/javascript'],
+export default defineConfig([
+  //  إعدادات JavaScript و TypeScript الأساسية
   {
-    ignores: ['**/dist'],
-  },
-  {
-    files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
-    plugins: {
-      'simple-import-sort': simpleImportSort,
+    files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
+    languageOptions: {
+      globals: globals.browser,
     },
+    plugins: {
+      js,
+      jsdoc, // نفعّل jsdoc plugin
+    },
+    extends: ['js/recommended'],
     rules: {
-      'simple-import-sort/imports': 'error',
-      'simple-import-sort/exports': 'error',
-      '@nx/enforce-module-boundaries': [
-        'error',
+      // تفعيل قاعدة require-jsdoc
+      'jsdoc/require-jsdoc': [
+        'warn',
         {
-          enforceBuildableLibDependency: true,
-          allow: ['^.*/eslint(\\.base)?\\.config\\.[cm]?[jt]s$'],
-          depConstraints: [
-            {
-              sourceTag: '*',
-              onlyDependOnLibsWithTags: ['*'],
-            },
-          ],
+          publicOnly: true,
+          require: {
+            ClassDeclaration: true,
+            MethodDefinition: true,
+            FunctionDeclaration: true,
+            ArrowFunctionExpression: false,
+            FunctionExpression: false,
+          },
         },
       ],
+      // قواعد إضافية لتحسين جودة الـ JSDoc
+      'jsdoc/check-alignment': 'warn',
+      'jsdoc/check-indentation': 'warn',
+      'jsdoc/check-tag-names': 'warn',
+      'jsdoc/require-param': 'warn',
+      'jsdoc/require-returns': 'warn',
     },
   },
-  {
-    files: [
-      '**/*.ts',
-      '**/*.tsx',
-      '**/*.cts',
-      '**/*.mts',
-      '**/*.js',
-      '**/*.jsx',
-      '**/*.cjs',
-      '**/*.mjs',
-    ],
-    // Override or add rules here
-    rules: {},
-  },
-];
+
+  // إعدادات TypeScript الافتراضية من typescript-eslint
+  ...tseslint.configs.recommended,
+]);

@@ -23,8 +23,8 @@ export class Register {
     {
       name: this.fb.control('', [
         Validators.required,
-        Validators.minLength(10),
-        Validators.maxLength(5),
+        Validators.minLength(2),
+        Validators.maxLength(20),
       ]),
 
       email: this.fb.control('', [Validators.required, Validators.email]),
