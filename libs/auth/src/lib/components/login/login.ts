@@ -6,6 +6,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Button, Input } from '@org/ui';
+import { CookieService } from 'ngx-cookie-service';
 import { Subscription } from 'rxjs';
 
 import { Auth } from '../../services/auth';
@@ -20,6 +21,7 @@ export class Login {
   private readonly authService = inject(Auth);
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly router = inject(Router);
+  private readonly cookieService = inject(CookieService);
   msgError = signal('');
   isLoading = signal(false);
 
@@ -42,9 +44,9 @@ export class Login {
         .subscribe({
           next: (res) => {
             console.log(res);
-            setTimeout(() => {
-              this.isLoading.set(false);
-            }, 1000);
+            this.isLoading.set(false);
+            this.cookieService.set('token', res.token);
+            this.router.navigate(['/home']);
           },
           error: (err) => {
             console.log(err);
