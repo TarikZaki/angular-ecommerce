@@ -1,1 +1,31 @@
-<p>login works!</p>
+<section
+  class="bg-gray-100 md:w-1/2 mx-auto my-14 py-8 shadow-md border-gray-200 rounded-lg text-center"
+>
+  <h1>Register Now</h1>
+
+  <form
+    [formGroup]="loginForm"
+    (ngSubmit)="onSubmitForm()"
+    class="flex flex-col px-6 mt-6"
+  >
+    <lib-input
+      formControlName="email"
+      [typeInput]="'email'"
+      [placeholder]="'write your email'"
+      [label]="'email'"
+    ></lib-input>
+
+    <lib-input
+      formControlName="password"
+      [typeInput]="'password'"
+      [placeholder]="'write a password'"
+      [label]="'password'"
+    ></lib-input>
+
+    <lib-button [loading]="isLoading()">Register</lib-button>
+
+    @if (msgError()) {
+    <p class="text-center text-red-900 mt-4 p-4 bg-red-200">{{msgError()}}</p>
+    }
+  </form>
+</section>

@@ -6,12 +6,16 @@ export interface RegisterRequest {
   phone: string;
 }
 
-export interface RegisterResponse {
+export interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+export interface AuthResponse {
   message: string;
   user: User;
   token: string;
 }
-
 export interface User {
   name: string;
   email: string;

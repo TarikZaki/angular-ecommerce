@@ -1,9 +1,59 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
+import {
+  NonNullableFormBuilder,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { Router } from '@angular/router';
+import { Button, Input } from '@org/ui';
+import { Subscription } from 'rxjs';
+
+import { Auth } from '../../services/auth';
 
 @Component({
   selector: 'lib-login',
-  imports: [],
+  imports: [Input, ReactiveFormsModule, Button],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
-export class Login {}
+export class Login {
+  private readonly authService = inject(Auth);
+  private readonly fb = inject(NonNullableFormBuilder);
+  private readonly router = inject(Router);
+  msgError = signal('');
+  isLoading = signal(false);
+
+  loginForm = this.fb.group({
+    email: this.fb.control('', [Validators.required, Validators.email]),
+    password: this.fb.control('', [
+      Validators.required,
+      Validators.minLength(6),
+      Validators.maxLength(20),
+    ]),
+  });
+
+  newRes: Subscription = new Subscription();
+  onSubmitForm() {
+    if (this.loginForm.valid) {
+      this.isLoading.set(true);
+      this.newRes?.unsubscribe();
+      this.newRes = this.authService
+        .loginForm(this.loginForm.getRawValue())
+        .subscribe({
+          next: (res) => {
+            console.log(res);
+            setTimeout(() => {
+              this.isLoading.set(false);
+            }, 1000);
+          },
+          error: (err) => {
+            console.log(err);
+            this.isLoading.set(false);
+            this.msgError.set(err.error.message || 'Something went wrong');
+          },
+        });
+    } else {
+      this.loginForm.markAllAsTouched();
+    }
+  }
+}

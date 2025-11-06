@@ -1,1 +1,10 @@
-<button class="btn-main"><ng-content></ng-content></button>
+<button class="btn-main">
+  <ng-content></ng-content>
+  @if (loading()) {
+  <mat-spinner
+    diameter="24"
+    strokeWidth="2"
+    class="!inline-block !align-middle ml-1 text-white"
+  ></mat-spinner>
+  }
+</button>
