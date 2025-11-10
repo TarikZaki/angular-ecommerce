@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
@@ -10,6 +10,11 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 export class Navbar {
   isLoggedIn = input.required<boolean>();
   isMenuOpen = false;
+  clickSignout = output<void>();
+
+  handleSignout() {
+    this.clickSignout.emit();
+  }
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
   }
