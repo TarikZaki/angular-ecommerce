@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@org/auth": ["libs/auth/src/index.ts"],
+      "@org/guards": ["libs/guards/src/index.ts"],
       "@org/home": ["libs/home/src/index.ts"],
       "@org/shared": ["libs/shared/src/index.ts"],
       "@org/ui": ["libs/ui/src/index.ts"]
