@@ -40,6 +40,9 @@
       [placeholder]="'write a phone number'"
       [label]="'phone'"
     ></lib-input>
-    <lib-button>Register</lib-button>
+    <lib-button [loading]="isLoading()">Register</lib-button>
+    @if (msgError()) {
+    <p class="text-center text-red-900 mt-4 p-4 bg-red-200">{{msgError()}}</p>
+    }
   </form>
 </section>

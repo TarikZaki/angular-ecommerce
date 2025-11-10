@@ -13,7 +13,9 @@ html {
     )
   );
 }
-
+mat-spinner circle {
+  stroke: currentColor !important;
+}
 body {
   font-family: 'Open Sans Variable', sans-serif;
   background: var(--mat-sys-surface);
