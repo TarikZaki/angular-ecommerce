@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
 
 import { AuthResponse, LoginRequest, RegisterRequest } from '../models/iauth';
@@ -9,6 +11,8 @@ import { AuthResponse, LoginRequest, RegisterRequest } from '../models/iauth';
 })
 export class Auth {
   private readonly httpClient = inject(HttpClient);
+  private readonly cookieService = inject(CookieService);
+  private readonly router = inject(Router);
 
   registerForm(data: RegisterRequest): Observable<AuthResponse> {
     return this.httpClient.post<AuthResponse>(
