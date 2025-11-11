@@ -1,6 +1,9 @@
 import { Component, input, output } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
+/**
+ *
+ */
 @Component({
   selector: 'lib-navbar',
   imports: [RouterLink, RouterLinkActive],

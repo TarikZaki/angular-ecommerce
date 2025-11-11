@@ -6,6 +6,9 @@ import { Observable } from 'rxjs';
 
 import { AuthResponse, LoginRequest, RegisterRequest } from '../models/iauth';
 
+/**
+ *
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -41,5 +44,13 @@ export class Auth {
       'https://ecommerce.routemisr.com/api/v1/auth/signin',
       data
     );
+  }
+
+  /**
+   * sign out function that delete token and navigate to login
+   */
+  signout(): void {
+    this.cookieService.delete('token');
+    this.router.navigate(['/login']);
   }
 }
