@@ -6,4 +6,7 @@ import { Component } from '@angular/core';
   templateUrl: './card.html',
   styleUrl: './card.css',
 })
+/**
+ * Presentational card container component.
+ */
 export class Card {}

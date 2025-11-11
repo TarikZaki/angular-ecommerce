@@ -11,12 +11,18 @@ import { Subscription } from 'rxjs';
 
 import { Auth } from '../../services/auth';
 
+/**
+ *
+ */
 @Component({
   selector: 'lib-login',
   imports: [Input, ReactiveFormsModule, Button],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
+/**
+ * Login component handling user authentication.
+ */
 export class Login {
   private readonly authService = inject(Auth);
   private readonly fb = inject(NonNullableFormBuilder);
@@ -35,6 +41,9 @@ export class Login {
   });
 
   newRes: Subscription = new Subscription();
+  /**
+   * Submits the login form and handles success/error states.
+   */
   onSubmitForm() {
     if (this.loginForm.valid) {
       this.isLoading.set(true);
@@ -43,7 +52,6 @@ export class Login {
         .loginForm(this.loginForm.getRawValue())
         .subscribe({
           next: (res) => {
-            console.log(res);
             this.isLoading.set(false);
             this.cookieService.set('token', res.token);
             this.router.navigate(['/home']);

@@ -9,6 +9,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   styleUrls: ['./button.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+/**
+ * Reusable button component with optional loading indicator.
+ */
 export class Button {
   loading = input(false);
 }
