@@ -1,4 +1,4 @@
-import { Auth } from './../../../../auth/src/lib/services/auth';
+import { Auth } from '@org/auth';
 import { Component, inject } from '@angular/core';
 import { Navbar } from '@org/ui';
 
