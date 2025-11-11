@@ -10,12 +10,18 @@ import { Subscription } from 'rxjs';
 
 import { Auth } from '../../services/auth';
 import { confirmPasswordValidator } from '../../validators/confirm-password.validator';
+/**
+ *
+ */
 @Component({
   selector: 'lib-register',
   imports: [ReactiveFormsModule, Input, Button],
   templateUrl: './register.html',
   styleUrl: './register.css',
 })
+/**
+ * Register component handling user signup flow.
+ */
 export class Register {
   private readonly authService = inject(Auth);
   private readonly fb = inject(NonNullableFormBuilder);
@@ -47,6 +53,9 @@ export class Register {
   );
 
   newRes: Subscription = new Subscription();
+  /**
+   * Submits the registration form and handles navigation and errors.
+   */
   onSubmitForm() {
     if (this.registerForm.valid) {
       this.isLoading.set(true);
@@ -54,12 +63,9 @@ export class Register {
       this.newRes = this.authService
         .registerForm(this.registerForm.getRawValue())
         .subscribe({
-          next: (res) => {
-            console.log(res);
-            setTimeout(() => {
-              this.router.navigate(['/login']);
-              this.isLoading.set(false);
-            }, 1000);
+          next: () => {
+            this.router.navigate(['/login']);
+            this.isLoading.set(false);
           },
           error: (err) => {
             console.log(err);

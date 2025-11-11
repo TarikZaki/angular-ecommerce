@@ -1,5 +1,12 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
+/**
+ * Creates a form-level validator that ensures two controls (password and confirm password) match.
+ *
+ * @param passwordField - The control name for the original password.
+ * @param confirmPasswordField - The control name for the confirmation password.
+ * @returns A ValidatorFn that returns `{ misMatch: true }` when values differ, otherwise `null`.
+ */
 export function confirmPasswordValidator(
   passwordField: string,
   confirmPasswordField: string

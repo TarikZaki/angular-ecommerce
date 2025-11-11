@@ -6,7 +6,17 @@ import { ValidationErrors } from '@angular/forms';
   standalone: true,
   pure: false,
 })
+/**
+ * Pipe that converts Angular form ValidationErrors into user-friendly messages.
+ */
 export class ErrorMessagePipe implements PipeTransform {
+  /**
+   * Builds a human-readable error message string based on Angular form ValidationErrors.
+   *
+   * @param errors - Validation errors object from a form control.
+   * @param fieldLabel - A friendly field label used in messages.
+   * @returns A formatted string of error messages, or an empty string when no errors.
+   */
   transform(
     errors: ValidationErrors | null | undefined,
     fieldLabel = 'This field'

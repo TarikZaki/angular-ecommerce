@@ -1,15 +1,32 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
+/**
+ *
+ */
 @Component({
   selector: 'lib-navbar',
   imports: [RouterLink, RouterLinkActive],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
+/**
+ * Responsive navigation bar showing links based on authentication state.
+ */
 export class Navbar {
   isLoggedIn = input.required<boolean>();
   isMenuOpen = false;
+  clickSignout = output<void>();
+
+  /**
+   * Emits a sign out event to the parent component.
+   */
+  handleSignout() {
+    this.clickSignout.emit();
+  }
+  /**
+   * Toggles the mobile menu open/closed state.
+   */
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
   }
@@ -39,6 +56,9 @@ export class Navbar {
     { label: 'Register', path: 'register' },
   ];
 
+  /**
+   * Returns auth-related navigation links based on login state.
+   */
   get authLinks() {
     return this.isLoggedIn() ? this.authLinksLoggedIn : this.authLinksLoggedOut;
   }

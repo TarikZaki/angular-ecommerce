@@ -31,6 +31,9 @@ import { ErrorMessagePipe } from '../../pipes/error-message-pipe';
   styleUrl: './input.css',
   changeDetection: ChangeDetectionStrategy.Default,
 })
+/**
+ * Form input component implementing ControlValueAccessor with built-in error display.
+ */
 export class Input implements ControlValueAccessor {
   typeInput = input('text', {});
   placeholder = input('');
@@ -39,6 +42,9 @@ export class Input implements ControlValueAccessor {
   disabled = signal(false);
   ngControl = inject(NgControl, { optional: true, self: true });
 
+  /**
+   * Registers this component as a ControlValueAccessor if used within a form control.
+   */
   constructor() {
     if (this.ngControl) {
       this.ngControl.valueAccessor = this;
@@ -46,11 +52,21 @@ export class Input implements ControlValueAccessor {
   }
 
   hide: WritableSignal<boolean> = signal(true);
+  /**
+   * Toggles password visibility and stops event propagation.
+   *
+   * @param event - Mouse click event from the toggle button.
+   */
   clickEvent(event: MouseEvent) {
     this.hide.set(!this.hide());
     event.stopPropagation();
   }
 
+  /**
+   * Updates internal value and propagates changes to the form control.
+   *
+   * @param event - Input event emitted by the native input element.
+   */
   onInputChange(event: Event) {
     const value = (event.target as HTMLInputElement).value;
     this.value.set(value);
@@ -59,25 +75,51 @@ export class Input implements ControlValueAccessor {
   private onChange?: (value: any) => void;
   private onTouched?: () => void;
 
+  /**
+   * Marks the control as touched on blur.
+   */
   onBlur() {
     this.onTouched?.();
   }
 
+  /**
+   * Writes an external value to the view.
+   *
+   * @param value - The value to set.
+   */
   writeValue(value: string): void {
     this.value.set(value || '');
   }
 
+  /**
+   * Registers a callback to be triggered when the value changes.
+   *
+   * @param fn - Change propagation function.
+   */
   registerOnChange(fn: any): void {
     this.onChange = fn;
   }
 
+  /**
+   * Registers a callback to be triggered when the control is touched.
+   *
+   * @param fn - Touched propagation function.
+   */
   registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
+  /**
+   * Updates the disabled state of the control.
+   *
+   * @param isDisabled - Whether the control should be disabled.
+   */
   setDisabledState(isDisabled: boolean): void {
     this.disabled.set(isDisabled);
   }
 
+  /**
+   * Whether the form control currently has validation errors and was interacted with.
+   */
   get hasError(): boolean {
     return !!(
       this.ngControl?.control?.invalid &&

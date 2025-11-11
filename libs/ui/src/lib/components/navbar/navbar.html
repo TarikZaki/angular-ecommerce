@@ -8,7 +8,7 @@
     <ul class="hidden lg:flex items-center gap-6">
       @for (link of mainLinks; track link.label) {
       <li class="nav-link">
-        <a [routerLink]="link.path" routerLinkActive="nav-active"
+        <a [routerLink]="'/'+link.path" routerLinkActive="nav-active"
           >{{link.label}}</a
         >
       </li>
@@ -37,9 +37,13 @@
     <ul class="flex items-center gap-6">
       @for (link of authLinks; track link.label) {
       <li class="nav-link">
-        <a [routerLink]="link.path" routerLinkActive="nav-active">
+        @if (link.path === 'signout') {
+        <button (click)="handleSignout()">{{ link.label }}</button>
+        } @else {
+        <a [routerLink]="'/' + link.path" routerLinkActive="nav-active">
           {{ link.label }}
         </a>
+        }
       </li>
       }
     </ul>
@@ -54,7 +58,7 @@
   <ul class="flex flex-col gap-4 mb-6">
     @for (link of mainLinks; track link.label) {
     <li class="nav-link">
-      <a [routerLink]="link.path" routerLinkActive="nav-active">
+      <a [routerLink]=" '/'+link.path" routerLinkActive="nav-active">
         {{ link.label }}
       </a>
     </li>
@@ -70,9 +74,13 @@
   <ul class="flex flex-col gap-4">
     @for (link of authLinks; track link.label) {
     <li class="nav-link">
-      <a [routerLink]="link.path" routerLinkActive="nav-active">
+      @if (link.path === 'signout') {
+      <button (click)="handleSignout()">{{ link.label }}</button>
+      } @else {
+      <a [routerLink]=" '/'+link.path" routerLinkActive="nav-active">
         {{ link.label }}
       </a>
+      }
     </li>
     }
   </ul>

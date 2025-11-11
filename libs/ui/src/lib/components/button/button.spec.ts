@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Button } from './button';
 import { By } from '@angular/platform-browser';
+
+import { Button } from './button';
 
 describe('Button', () => {
   let component: Button;
