@@ -1,4 +1,9 @@
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { headerInterceptor } from './../../../../libs/interceptors/src/lib/headers/header-interceptor';
+import {
+  provideHttpClient,
+  withFetch,
+  withInterceptors,
+} from '@angular/common/http';
 import {
   ApplicationConfig,
   importProvidersFrom,
@@ -16,7 +21,7 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(appRoutes),
-    provideHttpClient(withFetch()),
+    provideHttpClient(withFetch(), withInterceptors([headerInterceptor])),
     provideAnimations(),
     importProvidersFrom(CookieService),
   ],

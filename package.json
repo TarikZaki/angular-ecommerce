@@ -22,6 +22,7 @@
     "@angular/router": "^20.3.6",
     "@fontsource-variable/open-sans": "^5.2.7",
     "@fortawesome/fontawesome-free": "^7.1.0",
+    "jwt-decode": "^4.0.0",
     "ngx-cookie-service": "^20.1.1",
     "rxjs": "~7.8.0",
     "zone.js": "~0.15.0"

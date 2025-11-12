@@ -1,6 +1,7 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
+import { Auth } from '@org/auth';
+import { tap } from 'rxjs';
 
 /**
  * Guard that allows navigation only when a valid auth token exists.
@@ -10,12 +11,11 @@ import { CookieService } from 'ngx-cookie-service';
  * @returns `true` if authenticated; otherwise a `UrlTree` redirecting to `/login`.
  */
 export const authGuard: CanActivateFn = (route, state) => {
-  const cookieService = inject(CookieService);
   const router = inject(Router);
-
-  if (cookieService.get('token')) {
-    return true;
-  } else {
-    return router.parseUrl('/login');
-  }
+  const auth = inject(Auth);
+  return auth.verifyToken().pipe(
+    tap((valid) => {
+      if (!valid) router.navigate(['/login']);
+    })
+  );
 };

@@ -1,10 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { jwtDecode, JwtPayload } from 'jwt-decode';
 import { CookieService } from 'ngx-cookie-service';
-import { Observable } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 
-import { AuthResponse, LoginRequest, RegisterRequest } from '../models/iauth';
+import {
+  AuthResponse,
+  DecodedToken,
+  LoginRequest,
+  RegisterRequest,
+} from '../models/iauth';
 
 /**
  *
@@ -19,6 +25,7 @@ export class Auth {
   private readonly httpClient = inject(HttpClient);
   private readonly cookieService = inject(CookieService);
   private readonly router = inject(Router);
+  private readonly getToken = this.cookieService.get('token');
 
   /**
    * Sends a signup request.
@@ -52,5 +59,33 @@ export class Auth {
   signout(): void {
     this.cookieService.delete('token');
     this.router.navigate(['/login']);
+  }
+
+  /**
+   *verify is token valid
+   */
+  verifyToken(): Observable<boolean> {
+    return this.httpClient
+      .get('https://ecommerce.routemisr.com/api/v1/auth/verifyToken')
+      .pipe(
+        map(() => true),
+        catchError(() => {
+          this.signout();
+          return of(false);
+        })
+      );
+  }
+  /**
+   * decode token to get UserId
+   */
+  decodeToken(): DecodedToken | null {
+    try {
+      const token = this.getToken;
+      const decoded = jwtDecode<DecodedToken>(token);
+      return decoded;
+    } catch {
+      this.signout();
+      return null;
+    }
   }
 }
