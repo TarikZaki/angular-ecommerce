@@ -3,6 +3,10 @@
 @tailwind base;
 @tailwind components;
 
+.container {
+  @apply mx-auto;
+}
+
 html {
   color-scheme: light dark;
   @include mat.theme(

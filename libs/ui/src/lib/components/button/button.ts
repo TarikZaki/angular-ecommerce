@@ -1,6 +1,9 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
+/**
+ *
+ */
 @Component({
   selector: 'lib-button',
   standalone: true,

@@ -17,6 +17,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 
 import { ErrorMessagePipe } from '../../pipes/error-message-pipe';
+/**
+ *
+ */
 @Component({
   selector: 'lib-input',
   imports: [
