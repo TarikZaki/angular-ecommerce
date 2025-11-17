@@ -17,8 +17,9 @@
     "paths": {
       "@org/auth": ["libs/auth/src/index.ts"],
       "@org/guards": ["libs/guards/src/index.ts"],
-      "@org/home": ["libs/home/src/index.ts"],
       "@org/models": ["libs/models/src/index.ts"],
+      "@org/headers": ["libs/interceptors/src/index.ts"],
+      "@org/home": ["libs/home/src/index.ts"],
       "@org/ui": ["libs/ui/src/index.ts"]
     }
   },
