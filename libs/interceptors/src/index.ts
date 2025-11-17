@@ -1,1 +1,1 @@
-export * from './lib/headers/headers';
+export * from './lib/headers/header-interceptor';

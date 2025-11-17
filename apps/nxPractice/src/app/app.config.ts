@@ -1,4 +1,3 @@
-import { headerInterceptor } from './../../../../libs/interceptors/src/lib/headers/header-interceptor';
 import {
   provideHttpClient,
   withFetch,
@@ -12,6 +11,7 @@ import {
 } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
+import { headerInterceptor } from '@org/headers';
 import { CookieService } from 'ngx-cookie-service';
 
 import { appRoutes } from './app.routes';

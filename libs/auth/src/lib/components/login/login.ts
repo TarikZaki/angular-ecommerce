@@ -54,7 +54,6 @@ export class Login {
           next: (res) => {
             this.isLoading.set(false);
             this.cookieService.set('token', res.token);
-            // console.log(this.authService.decodeToken()?.id);
             this.router.navigate(['/home']);
           },
           error: (err) => {
