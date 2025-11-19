@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { apiRes, product } from '@org/models';
 import { Observable } from 'rxjs';
+
 /**
- *
+ *  Products Service
  */
 @Injectable({
   providedIn: 'root',
 })
-export class ProductService {
+export class Products {
   private readonly httpClient = inject(HttpClient);
   /**
    *   get all products

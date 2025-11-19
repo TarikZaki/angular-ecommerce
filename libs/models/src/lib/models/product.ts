@@ -17,7 +17,7 @@ export interface product {
   updatedAt: string;
   id: string;
   priceAfterDiscount?: number;
-  availableColors?: any[];
+  availableColors?: string[];
 }
 
 export interface Category {
