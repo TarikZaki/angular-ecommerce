@@ -3,6 +3,10 @@
 @tailwind base;
 @tailwind components;
 
+.container {
+  @apply mx-auto;
+}
+
 html {
   color-scheme: light dark;
   @include mat.theme(
@@ -23,4 +27,10 @@ body {
 }
 :root {
   --mat-form-field-filled-container-color: #f8fafc;
+}
+.owl-theme .owl-nav {
+  padding-top: 40px;
+}
+.owl-theme .owl-nav [class*='owl-'] {
+  margin: 0 20px;
 }
