@@ -1,16 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { jwtDecode, JwtPayload } from 'jwt-decode';
-import { CookieService } from 'ngx-cookie-service';
-import { catchError, map, Observable, of } from 'rxjs';
-
 import {
   AuthResponse,
   DecodedToken,
   LoginRequest,
   RegisterRequest,
-} from '../models/iauth';
+} from '@org/models';
+import { jwtDecode } from 'jwt-decode';
+import { CookieService } from 'ngx-cookie-service';
+import { catchError, map, Observable, of } from 'rxjs';
 
 /**
  *
