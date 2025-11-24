@@ -1,3 +1,5 @@
+import { Category, Subcategory } from './common';
+
 export interface product {
   sold: null | number;
   images: string[];
@@ -18,18 +20,4 @@ export interface product {
   id: string;
   priceAfterDiscount?: number;
   availableColors?: string[];
-}
-
-export interface Category {
-  _id: string;
-  name: string;
-  slug: string;
-  image: string;
-}
-
-export interface Subcategory {
-  _id: string;
-  name: string;
-  slug: string;
-  category: string;
 }
