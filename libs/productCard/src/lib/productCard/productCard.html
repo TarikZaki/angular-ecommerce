@@ -17,6 +17,12 @@
       [alt]="product().title"
       class="rounded-none"
     />
+    <button
+      class="absolute bottom-2 right-2 bg-gray-300 text-xs px-2 py-1 rounded"
+      (click)="addToCart(product()._id)"
+    >
+      <i class="fa-solid fa-cart-plus text-xl"></i>
+    </button>
   </div>
   <mat-card-content>
     <p class="line-clamp-1 mb-2">{{ product().title }}</p>
@@ -29,6 +35,8 @@
     </div>
   </mat-card-content>
   <mat-card-actions>
-    <lib-button class="w-full">Add to cart</lib-button>
+    <lib-button (clicked)="addToCart(product()._id)" class="w-full"
+      >Add to cart</lib-button
+    >
   </mat-card-actions>
 </mat-card>

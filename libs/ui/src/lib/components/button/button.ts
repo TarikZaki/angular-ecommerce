@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  output,
+} from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 /**
@@ -16,5 +21,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
  * Reusable button component with optional loading indicator.
  */
 export class Button {
+  clicked = output<void>();
   loading = input(false);
+  /**
+   *  Handle button click event
+   */
+  handleClick() {
+    this.clicked.emit();
+  }
 }
