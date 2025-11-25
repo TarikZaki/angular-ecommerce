@@ -13,6 +13,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
 import { headerInterceptor } from '@org/headers';
 import { CookieService } from 'ngx-cookie-service';
+import { provideToastr } from 'ngx-toastr';
 
 import { appRoutes } from './app.routes';
 
@@ -24,5 +25,6 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch(), withInterceptors([headerInterceptor])),
     provideAnimations(),
     importProvidersFrom(CookieService),
+    provideToastr(),
   ],
 };
