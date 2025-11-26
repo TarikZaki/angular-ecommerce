@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  input,
+} from '@angular/core';
 import {
   MatCard,
   MatCardActions,
@@ -9,7 +14,9 @@ import {
   MatCardTitle,
 } from '@angular/material/card';
 import { product } from '@org/models';
+import { CartService } from '@org/services';
 import { Button } from '@org/ui';
+import { ToastService } from 'ngx-toastr-notifier';
 
 /**
  *  * Product card component.
@@ -31,5 +38,22 @@ import { Button } from '@org/ui';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductCard {
+  private readonly cartService = inject(CartService);
+  private readonly toastrService = inject(ToastService);
   product = input.required<product>();
+
+  /**
+   *  Add product to cart
+   */
+  addToCart(id: string) {
+    this.cartService.AddProductToCart(id).subscribe({
+      next: () => {
+        this.toastrService.success('Product added to cart successfully');
+        // console.log(res);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
 }
