@@ -1,5 +1,6 @@
 import { Component, input } from '@angular/core';
 import { CartData } from '@org/models';
+import { ProductControls } from '@org/product-controls';
 
 import { CartItems } from '../cart-items/cart-items';
 
@@ -8,7 +9,7 @@ import { CartItems } from '../cart-items/cart-items';
  */
 @Component({
   selector: 'lib-item-box',
-  imports: [CartItems],
+  imports: [CartItems, ProductControls],
   templateUrl: './item-box.html',
   styleUrl: './item-box.css',
 })

@@ -21,6 +21,7 @@
       "@org/headers": ["libs/interceptors/src/index.ts"],
       "@org/home": ["libs/home/src/index.ts"],
       "@org/models": ["libs/models/src/index.ts"],
+      "@org/product-controls": ["libs/product-controls/src/index.ts"],
       "@org/productCard": ["libs/productCard/src/index.ts"],
       "@org/services": ["libs/services/src/index.ts"],
       "@org/ui": ["libs/ui/src/index.ts"]
