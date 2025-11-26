@@ -12,4 +12,9 @@ export const appRoutes: Route[] = [
     canActivate: [authGuard],
     loadChildren: () => import('@org/home').then((m) => m.homeRoutes),
   },
+  {
+    path: 'cart',
+    canActivate: [authGuard],
+    loadChildren: () => import('@org/cart').then((m) => m.cartRoutes),
+  },
 ];

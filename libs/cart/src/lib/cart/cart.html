@@ -1,0 +1,9 @@
+<section class="bg-gray-200 py-8">
+  <div class="container gap-8 px-4 grid lg:grid-cols-12">
+    <lib-item-box [cart]="cartDetails()" class="lg:col-span-8"></lib-item-box>
+    <lib-order-summary
+      [cart]="cartDetails()"
+      class="lg:col-span-4"
+    ></lib-order-summary>
+  </div>
+</section>
