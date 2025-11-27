@@ -5,10 +5,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '@org/services';
 import { Button, Input } from '@org/ui';
 import { Subscription } from 'rxjs';
 
-import { Auth } from '../../services/auth';
 import { confirmPasswordValidator } from '../../validators/confirm-password.validator';
 /**
  *
@@ -23,7 +23,7 @@ import { confirmPasswordValidator } from '../../validators/confirm-password.vali
  * Register component handling user signup flow.
  */
 export class Register {
-  private readonly authService = inject(Auth);
+  private readonly authService = inject(AuthService);
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly router = inject(Router);
   msgError = signal('');

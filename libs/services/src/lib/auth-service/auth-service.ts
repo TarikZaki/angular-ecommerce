@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   AuthResponse,
@@ -9,7 +9,7 @@ import {
 } from '@org/models';
 import { jwtDecode } from 'jwt-decode';
 import { CookieService } from 'ngx-cookie-service';
-import { catchError, map, Observable, of } from 'rxjs';
+import { catchError, map, Observable, of, tap } from 'rxjs';
 
 /**
  *
@@ -17,14 +17,21 @@ import { catchError, map, Observable, of } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-/**
- * Authentication service for handling user registration and login.
- */
-export class Auth {
+export class AuthService {
   private readonly httpClient = inject(HttpClient);
   private readonly cookieService = inject(CookieService);
   private readonly router = inject(Router);
   private readonly getToken = this.cookieService.get('token');
+
+  isLoggedIn = signal<boolean>(this.hasValidToken());
+
+  /**
+   *  Checks if a valid authentication token exists.
+   */
+  private hasValidToken(): boolean {
+    const token = this.cookieService.get('token');
+    return !!token;
+  }
 
   /**
    * Sends a signup request.
@@ -46,10 +53,16 @@ export class Auth {
    * @returns Observable that emits the authentication response.
    */
   loginForm(data: LoginRequest): Observable<AuthResponse> {
-    return this.httpClient.post<AuthResponse>(
-      'https://ecommerce.routemisr.com/api/v1/auth/signin',
-      data
-    );
+    return this.httpClient
+      .post<AuthResponse>(
+        'https://ecommerce.routemisr.com/api/v1/auth/signin',
+        data
+      )
+      .pipe(
+        tap(() => {
+          this.isLoggedIn.set(true);
+        })
+      );
   }
 
   /**
@@ -57,6 +70,7 @@ export class Auth {
    */
   signout(): void {
     this.cookieService.delete('token');
+    this.isLoggedIn.set(false);
     this.router.navigate(['/login']);
   }
 
