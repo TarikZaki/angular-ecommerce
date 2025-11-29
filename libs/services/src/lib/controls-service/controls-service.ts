@@ -1,10 +1,11 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { CartData } from '@org/models';
+import { CartData, CartItem, getCartItemProductId } from '@org/models';
 
 import { CartService } from '../cart-service/cart-service';
 
 /**
- *
+ * Service for managing cart controls and local cart state.
+ * Handles cart operations like loading, updating quantities, and removing products.
  */
 @Injectable({
   providedIn: 'root',
@@ -15,24 +16,54 @@ export class ControlsService {
   cart = signal<CartData | null>(null);
   numOfCartItems = signal<number | null>(null);
   loadingProductId = signal<string | null>(null);
+  localCartProducts = signal<Map<string, number>>(new Map());
 
   /**
-   *  to Get logged user data
+   * Loads the logged-in user's cart data from the server.
    */
   loadCart(): void {
     this.cartService.GetLoggedUserCart().subscribe({
       next: (res) => {
+        this.updateLocalCartProducts(res.data.products);
         this.cart.set(res.data);
         this.numOfCartItems.set(res.numOfCartItems);
       },
       error: (err) => {
-        console.log(err);
+        console.error('Failed to load cart:', err);
+        // Optionally reset cart state on error
+        this.cart.set(null);
+        this.numOfCartItems.set(null);
+        this.localCartProducts.set(new Map());
       },
     });
   }
 
   /**
-   *  Increment product quantity
+   * Updates the local cart products map with the latest cart items.
+   * This creates a Map of product IDs to their quantities for quick lookups.
+   *
+   * @param products - Array of cart items to process
+   */
+  updateLocalCartProducts(products: CartItem[]): void {
+    this.localCartProducts.update(() => {
+      const newMap = new Map<string, number>();
+
+      products.forEach((item) => {
+        const productId = getCartItemProductId(item);
+        if (productId) {
+          newMap.set(productId, item.count);
+        }
+      });
+
+      return newMap;
+    });
+  }
+
+  /**
+   * Increments the quantity of a product in the cart.
+   *
+   * @param productId - The ID of the product to increment
+   * @param currentCount - The current quantity of the product
    */
   incrementQuantity(productId: string, currentCount: number): void {
     this.loadingProductId.set(productId);
@@ -43,16 +74,21 @@ export class ControlsService {
         next: (res) => {
           this.cart.set(res.data);
           this.numOfCartItems.set(res.numOfCartItems);
+          this.updateLocalCartProducts(res.data.products);
           this.loadingProductId.set(null);
         },
-        error: () => {
+        error: (err) => {
+          console.error('Failed to increment product quantity:', err);
           this.loadingProductId.set(null);
         },
       });
   }
 
   /**
-   * Decrement product quantity
+   * Decrements the quantity of a product in the cart.
+   *
+   * @param productId - The ID of the product to decrement
+   * @param currentCount - The current quantity of the product
    */
   decrementQuantity(productId: string, currentCount: number): void {
     this.loadingProductId.set(productId);
@@ -62,16 +98,20 @@ export class ControlsService {
         next: (res) => {
           this.cart.set(res.data);
           this.numOfCartItems.set(res.numOfCartItems);
+          this.updateLocalCartProducts(res.data.products);
           this.loadingProductId.set(null);
         },
-        error: () => {
+        error: (err) => {
+          console.error('Failed to decrement product quantity:', err);
           this.loadingProductId.set(null);
         },
       });
   }
 
   /**
-   * Remove product from cart
+   * Removes a product from the cart.
+   *
+   * @param productId - The ID of the product to remove
    */
   removeProduct(productId: string): void {
     this.loadingProductId.set(productId);
@@ -80,18 +120,21 @@ export class ControlsService {
       next: (res) => {
         this.cart.set(res.data);
         this.numOfCartItems.set(res.numOfCartItems);
+        this.updateLocalCartProducts(res.data.products);
         this.loadingProductId.set(null);
-        console.log(res);
       },
       error: (err) => {
-        console.log(err);
+        console.error('Failed to remove product from cart:', err);
         this.loadingProductId.set(null);
       },
     });
   }
 
   /**
-   * Check if a specific product is loading
+   * Checks if a specific product is currently being processed (loading state).
+   *
+   * @param productId - The ID of the product to check
+   * @returns True if the product is currently loading, false otherwise
    */
   isProductLoading(productId: string): boolean {
     return this.loadingProductId() === productId;

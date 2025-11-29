@@ -1,10 +1,6 @@
 <mat-card class="card cursor-pointer mx-auto" appearance="outlined">
   <mat-card-header>
-    <div
-      mat-card-avatar
-      class="bg-cover"
-      [style.background-image]="'url('+product().brand. image"
-    ></div>
+    <div mat-card-avatar class="bg-cover"></div>
     <mat-card-title>
       <span class="text-sm">{{ product().category.name }}</span></mat-card-title
     >
@@ -17,12 +13,21 @@
       [alt]="product().title"
       class="rounded-none"
     />
-    <button
-      class="absolute bottom-2 right-2 bg-gray-300 text-xs px-2 py-1 rounded"
-      (click)="addToCart(product()._id)"
-    >
-      <i class="fa-solid fa-cart-plus text-xl"></i>
+
+    @if (localCartProduct().has(product()._id)) {
+    <lib-product-controls
+      [productId]="product()._id"
+      [count]="getProductCount(product()._id)"
+    ></lib-product-controls>
+    }@else{
+    <button (click)="addToCart(product()._id)">
+      <div
+        class="absolute bottom-2 right-2 bg-gray-300 text-xs px-2 py-1 rounded"
+      >
+        <i class="fa-solid fa-cart-plus text-xl"></i>
+      </div>
     </button>
+    }
   </div>
   <mat-card-content>
     <p class="line-clamp-1 mb-2">{{ product().title }}</p>
