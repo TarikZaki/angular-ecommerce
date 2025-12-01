@@ -14,20 +14,19 @@
       class="rounded-none"
     />
 
-    @if (localCartProduct().has(product()._id)) {
-    <lib-product-controls
-      [productId]="product()._id"
-      [count]="getProductCount(product()._id)"
-    ></lib-product-controls>
-    }@else{
-    <button (click)="addToCart(product()._id)">
-      <div
-        class="absolute bottom-2 right-2 bg-gray-300 text-xs px-2 py-1 rounded"
-      >
+    <div class="absolute bottom-2 right-2 text-xs px-2 py-1 rounded">
+      @if (localCartProduct().has(product()._id)) {
+      <lib-product-controls
+        [productId]="product()._id"
+        [count]="getProductCount(product()._id)"
+      ></lib-product-controls>
+
+      }@else{
+      <button (click)="addToCart(product()._id)">
         <i class="fa-solid fa-cart-plus text-xl"></i>
-      </div>
-    </button>
-    }
+      </button>
+      }
+    </div>
   </div>
   <mat-card-content>
     <p class="line-clamp-1 mb-2">{{ product().title }}</p>
