@@ -1,10 +1,25 @@
 <section class="section-style">
   <div class="container px-4 sm:px-6 lg:px-8">
     <h2 class="title-style">Products List</h2>
-    <div class="mt-10 grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-      @for (product of productList ; track product._id) {
+    <div
+      class="mt-10 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4"
+    >
+      @for (product of productList() ; track product._id) {
       <lib-product-card [product]="product"></lib-product-card>
       }
+    </div>
+    <div class="flex justify-center mt-8">
+      <mat-paginator
+        [length]="totalProducts()"
+        [pageSize]="pageSize()"
+        [pageSizeOptions]="[15, 20, 25]"
+        [pageSizeOptions]="pageSizeOptions"
+        [pageIndex]="currentPage() - 1"
+        (page)="onPageChange($event)"
+        aria-label="Select page"
+        class="custom-paginator"
+      >
+      </mat-paginator>
     </div>
   </div>
 </section>

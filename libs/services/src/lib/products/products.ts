@@ -14,9 +14,9 @@ export class Products {
   /**
    *   get all products
    */
-  getAllProducts(): Observable<apiRes<product>> {
+  getAllProducts(page = 1, limit = 10): Observable<apiRes<product>> {
     return this.httpClient.get<apiRes<product>>(
-      'https://ecommerce.routemisr.com/api/v1/products'
+      `https://ecommerce.routemisr.com/api/v1/products?page=${page}&limit=${limit}`
     );
   }
 }
