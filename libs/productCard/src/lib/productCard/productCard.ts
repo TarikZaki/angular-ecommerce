@@ -53,11 +53,9 @@ export class ProductCard {
    */
   addToCart(id: string): void {
     this.cartService.AddProductToCart(id).subscribe({
-      next: (res) => {
-        this.controlsService.updateLocalCartProducts(res.data.products);
-        this.controlsService.cart.set(res.data);
-        this.controlsService.numOfCartItems.set(res.numOfCartItems);
+      next: () => {
         this.toastrService.success('Product added to cart successfully');
+        this.controlsService.loadCart();
       },
       error: (err) => {
         console.error('Failed to add product to cart:', err);

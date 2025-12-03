@@ -1,8 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
 import {
-  AddToCartData,
   CartData,
-  CartItem,
+  CartProductItem,
   getCartItemProductId,
   GetUserCart,
 } from '@org/models';
@@ -19,7 +18,7 @@ import { CartService } from '../cart-service/cart-service';
 export class ControlsService {
   private readonly cartService = inject(CartService);
 
-  cart = signal<CartData | AddToCartData | null>(null);
+  cart = signal<CartData | null>(null);
   numOfCartItems = signal<number | null>(null);
   loadingProductId = signal<string | null>(null);
   localCartProducts = signal<Map<string, number>>(new Map());
@@ -48,7 +47,7 @@ export class ControlsService {
    *
    * @param products - Array of cart items to process
    */
-  updateLocalCartProducts(products: CartItem[]): void {
+  updateLocalCartProducts(products: CartProductItem[]): void {
     this.localCartProducts.update(() => {
       const newMap = new Map<string, number>();
       products.forEach((item) => {
