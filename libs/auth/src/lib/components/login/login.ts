@@ -5,11 +5,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '@org/services';
 import { Button, Input } from '@org/ui';
 import { CookieService } from 'ngx-cookie-service';
 import { Subscription } from 'rxjs';
-
-import { Auth } from '../../services/auth';
 
 /**
  *
@@ -24,7 +23,7 @@ import { Auth } from '../../services/auth';
  * Login component handling user authentication.
  */
 export class Login {
-  private readonly authService = inject(Auth);
+  private readonly authService = inject(AuthService);
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly router = inject(Router);
   private readonly cookieService = inject(CookieService);

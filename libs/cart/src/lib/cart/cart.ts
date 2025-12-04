@@ -1,6 +1,10 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { CartData } from '@org/models';
-import { CartService } from '@org/services';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit,
+} from '@angular/core';
+import { ControlsService } from '@org/services';
 
 import { ItemBox } from '../item-box/item-box';
 import { OrderSummary } from '../order-summary/order-summary';
@@ -13,27 +17,16 @@ import { OrderSummary } from '../order-summary/order-summary';
   imports: [ItemBox, OrderSummary],
   templateUrl: './cart.html',
   styleUrl: './cart.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Cart implements OnInit {
-  private readonly cartService = inject(CartService);
+  private readonly controlsService = inject(ControlsService);
 
-  cartDetails = signal<CartData | null>(null);
+  cartDetails = this.controlsService.cart;
   /**
    *  On init
    */
   ngOnInit(): void {
-    this.getLoggedUserData();
-  }
-
-  /**
-   *   Get logged user data
-   */
-  getLoggedUserData(): void {
-    this.cartService.GetLoggedUserCart().subscribe({
-      next: (res) => {
-        this.cartDetails.set(res.data);
-        console.log(res.data);
-      },
-    });
+    this.controlsService.loadCart();
   }
 }

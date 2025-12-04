@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { Auth } from '@org/auth';
+import { AuthService } from '@org/services';
 import { tap } from 'rxjs';
 
 /**
@@ -12,7 +12,7 @@ import { tap } from 'rxjs';
  */
 export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
-  const auth = inject(Auth);
+  const auth = inject(AuthService);
   return auth.verifyToken().pipe(
     tap((valid) => {
       if (!valid) router.navigate(['/login']);

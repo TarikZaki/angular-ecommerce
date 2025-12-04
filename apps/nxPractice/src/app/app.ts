@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { Footer } from '@org/ui';
+import { AuthService } from '@org/services';
+import { Footer, Navbar } from '@org/ui';
 
 /**
  *
  */
 @Component({
-  imports: [RouterModule, Footer],
+  imports: [RouterModule, Footer, Navbar],
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.scss',
@@ -15,5 +16,12 @@ import { Footer } from '@org/ui';
  * Root application component.
  */
 export class App {
+  readonly auth = inject(AuthService);
   protected title = 'nxPractice';
+  /**
+   * function to call signout from auth service
+   */
+  handleSignout() {
+    this.auth.signout();
+  }
 }

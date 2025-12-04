@@ -11,6 +11,15 @@ import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
   styleUrl: './main-slider.css',
 })
 export class MainSlider {
+  mainImages = [
+    'images/img1.avif',
+    'images/img2.avif',
+    'images/img3.avif',
+    'images/img4.avif',
+    'images/img5.avif',
+    'images/img6.avif',
+  ];
+  sideImages = ['images/img4.avif', 'images/img2.avif'];
   mainOptions: OwlOptions = {
     loop: true,
     mouseDrag: true,

@@ -32,4 +32,26 @@ export class CartService {
       }
     );
   }
+
+  /**
+   *  Remove product from cart
+   */
+  RemoveProductFromCart(id: string): Observable<GetUserCart> {
+    return this.httpClient.delete<GetUserCart>(
+      `https://ecommerce.routemisr.com/api/v1/cart/${id}`
+    );
+  }
+
+  /**
+   *  Update product quantity in cart
+   */
+  UpdateProductQuantityInCart(
+    id: string,
+    count: number
+  ): Observable<GetUserCart> {
+    return this.httpClient.put<GetUserCart>(
+      `https://ecommerce.routemisr.com/api/v1/cart/${id}`,
+      { count: count }
+    );
+  }
 }
