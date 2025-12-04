@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 export class Products {
   private readonly httpClient = inject(HttpClient);
   /**
-   *   get all products
+   *  get all products
    */
   getAllProducts(page = 1, limit = 10): Observable<apiRes<product>> {
     return this.httpClient.get<apiRes<product>>(
