@@ -53,7 +53,8 @@ export class ProductCard {
    */
   addToCart(id: string): void {
     this.cartService.AddProductToCart(id).subscribe({
-      next: () => {
+      next: (res) => {
+        this.controlsService.updateLocalCartProducts(res.data.products);
         this.toastrService.success('Product added to cart successfully');
         this.controlsService.loadCart();
       },
