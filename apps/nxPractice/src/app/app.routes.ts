@@ -17,4 +17,10 @@ export const appRoutes: Route[] = [
     canActivate: [authGuard],
     loadChildren: () => import('@org/cart').then((m) => m.cartRoutes),
   },
+  {
+    path: 'products',
+    canActivate: [authGuard],
+    loadChildren: () =>
+      import('@org/products-component').then((m) => m.productsComponentRoutes),
+  },
 ];

@@ -34,3 +34,9 @@ body {
 .owl-theme .owl-nav [class*='owl-'] {
   margin: 0 20px;
 }
+.title-style {
+  @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-green-600 text-center mb-8 sm:mb-10;
+}
+.section-style {
+  @apply bg-gray-100 py-12 sm:py-14 md:py-16 lg:py-20 border-t border-b border-gray-300 flex justify-center;
+}

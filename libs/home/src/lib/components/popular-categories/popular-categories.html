@@ -1,12 +1,6 @@
-<section
-  class="bg-gray-100 py-12 sm:py-14 md:py-16 lg:py-20 border-t border-b border-gray-300 flex justify-center"
->
+<section class="section-style">
   <div class="container px-4 sm:px-6 lg:px-8">
-    <h2
-      class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-green-600 text-center mb-8 sm:mb-10"
-    >
-      Popular Categories
-    </h2>
+    <h2 class="title-style">Popular Categories</h2>
     <owl-carousel-o [options]="categoriesOptions">
       @for (category of categoryList; track category._id) {
       <ng-template carouselSlide [id]="category._id">

@@ -15,7 +15,7 @@ import { Products } from '@org/services';
 export class PopularProducts implements OnInit {
   private readonly products = inject(Products);
   productList: product[] = [];
-
+  randomizedProducts: product[] = [];
   /**
    *  On init to call function getAllProductsData.
    */
@@ -30,6 +30,9 @@ export class PopularProducts implements OnInit {
     this.products.getAllProducts().subscribe({
       next: (res) => {
         this.productList = res.data;
+        this.randomizedProducts = [...this.productList]
+          .sort(() => Math.random() - 0.5)
+          .slice(0, 10);
       },
     });
   }
