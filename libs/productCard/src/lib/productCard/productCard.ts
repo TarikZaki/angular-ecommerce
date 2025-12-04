@@ -56,10 +56,13 @@ export class ProductCard {
       next: (res) => {
         this.controlsService.updateLocalCartProducts(res.data.products);
         this.toastrService.success('Product added to cart successfully');
+        this.controlsService.loadCart();
       },
       error: (err) => {
         console.error('Failed to add product to cart:', err);
-        this.toastrService.error('Failed to add product to cart. Please try again.');
+        this.toastrService.error(
+          'Failed to add product to cart. Please try again.'
+        );
       },
     });
   }
