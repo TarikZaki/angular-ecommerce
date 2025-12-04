@@ -1,3 +1,5 @@
+import { CartProductItem } from './get-user-cart';
+
 export interface AddtocartResponse {
   status: string;
   message: string;
@@ -9,7 +11,7 @@ export interface AddtocartResponse {
 export interface AddToCartData {
   _id: string;
   cartOwner: string;
-  products: AddToCartProduct[];
+  products: CartProductItem[];
   createdAt: string;
   updatedAt: string;
   __v: number;
