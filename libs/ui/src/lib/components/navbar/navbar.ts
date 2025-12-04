@@ -1,4 +1,4 @@
-import { Component, inject, input, output } from '@angular/core';
+import { Component, inject, input, OnInit, output } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { ControlsService } from '@org/services';
 
@@ -14,13 +14,12 @@ import { ControlsService } from '@org/services';
 /**
  * Responsive navigation bar showing links based on authentication state.
  */
-export class Navbar {
+export class Navbar implements OnInit {
+  private readonly controlsService = inject(ControlsService);
+
   isLoggedIn = input.required<boolean>();
   isMenuOpen = false;
   clickSignout = output<void>();
-  private readonly controlsService = inject(ControlsService);
-
-  numOfCartItems = this.controlsService.numOfCartItems;
 
   /**
    * Emits a sign out event to the parent component.
@@ -28,6 +27,15 @@ export class Navbar {
   handleSignout() {
     this.clickSignout.emit();
   }
+  /**
+   * Initializes the navbar component by loading the user's cart.
+   */
+  ngOnInit(): void {
+    if (this.isLoggedIn()) {
+      this.controlsService.loadCart();
+    }
+  }
+
   /**
    * Toggles the mobile menu open/closed state.
    */
