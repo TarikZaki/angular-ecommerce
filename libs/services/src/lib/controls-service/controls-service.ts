@@ -1,5 +1,10 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { CartData, CartItem, getCartItemProductId } from '@org/models';
+import {
+  CartData,
+  CartProductItem,
+  getCartItemProductId,
+  GetUserCart,
+} from '@org/models';
 
 import { CartService } from '../cart-service/cart-service';
 
@@ -30,9 +35,7 @@ export class ControlsService {
       },
       error: (err) => {
         console.error('Failed to load cart:', err);
-        // Optionally reset cart state on error
         this.cart.set(null);
-        this.numOfCartItems.set(null);
         this.localCartProducts.set(new Map());
       },
     });
@@ -44,10 +47,9 @@ export class ControlsService {
    *
    * @param products - Array of cart items to process
    */
-  updateLocalCartProducts(products: CartItem[]): void {
+  updateLocalCartProducts(products: CartProductItem[]): void {
     this.localCartProducts.update(() => {
       const newMap = new Map<string, number>();
-
       products.forEach((item) => {
         const productId = getCartItemProductId(item);
         if (productId) {
@@ -67,15 +69,11 @@ export class ControlsService {
    */
   incrementQuantity(productId: string, currentCount: number): void {
     this.loadingProductId.set(productId);
-
     this.cartService
       .UpdateProductQuantityInCart(productId, currentCount + 1)
       .subscribe({
         next: (res) => {
-          this.cart.set(res.data);
-          this.numOfCartItems.set(res.numOfCartItems);
-          this.updateLocalCartProducts(res.data.products);
-          this.loadingProductId.set(null);
+          this.handleCartUpdate(res);
         },
         error: (err) => {
           console.error('Failed to increment product quantity:', err);
@@ -96,10 +94,7 @@ export class ControlsService {
       .UpdateProductQuantityInCart(productId, currentCount - 1)
       .subscribe({
         next: (res) => {
-          this.cart.set(res.data);
-          this.numOfCartItems.set(res.numOfCartItems);
-          this.updateLocalCartProducts(res.data.products);
-          this.loadingProductId.set(null);
+          this.handleCartUpdate(res);
         },
         error: (err) => {
           console.error('Failed to decrement product quantity:', err);
@@ -118,16 +113,23 @@ export class ControlsService {
 
     this.cartService.RemoveProductFromCart(productId).subscribe({
       next: (res) => {
-        this.cart.set(res.data);
-        this.numOfCartItems.set(res.numOfCartItems);
-        this.updateLocalCartProducts(res.data.products);
-        this.loadingProductId.set(null);
+        this.handleCartUpdate(res);
       },
       error: (err) => {
         console.error('Failed to remove product from cart:', err);
         this.loadingProductId.set(null);
       },
     });
+  }
+
+  /**
+   *  to handle Cart Update
+   */
+  private handleCartUpdate(res: GetUserCart): void {
+    this.cart.set(res.data);
+    this.updateLocalCartProducts(res.data.products);
+    this.numOfCartItems.set(res.numOfCartItems);
+    this.loadingProductId.set(null);
   }
 
   /**
