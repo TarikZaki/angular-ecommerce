@@ -6,26 +6,57 @@
       class="w-1/2 mx-auto block p-2 rounded-lg shadow"
       placeholder="Search here"
       [(ngModel)]="searchTerm"
+      (ngModelChange)="onSearch()"
     />
+    <div class="grid grid-cols-12 gap-6">
+      <div class="hidden md:block col-span-12 md:col-span-2">
+        <!-- categories -->
+        <span class="font-semibold block">Categories</span>
+        <span
+          ><button
+            class="mt-4 text-sm text-red-500 underline"
+            (click)="resetCategory()"
+          >
+            Clear >
+          </button></span
+        >
+        @for (category of categoryInfo(); track category._id) {
+        <div>
+          <input
+            type="checkbox"
+            [id]="category._id"
+            [name]="category._id"
+            [checked]="selectedCategoryIds().includes(category._id)"
+            (change)="onCategoryToggle(category._id, $event)"
+          />
+          <label [for]="category._id">{{category.name}}</label>
+        </div>
+        }
 
-    <div
-      class="mt-10 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4"
-    >
-      @for (product of productList(); track product._id) {
-      <lib-product-card [product]="product"></lib-product-card>
-      }
-    </div>
-    <div class="flex justify-center mt-8">
-      <mat-paginator
-        [length]="totalProducts()"
-        [pageSize]="pageSize()"
-        [pageSizeOptions]="pageSizeOptions"
-        [pageIndex]="currentPage() - 1"
-        (page)="onPageChange($event)"
-        aria-label="Select page"
-        class="custom-paginator"
-      >
-      </mat-paginator>
+        <span class="font-semibold block mt-7">Price</span>
+      </div>
+
+      <div class="col-span-12 md:col-span-10">
+        <div
+          class="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+        >
+          @for (product of productList(); track product._id) {
+          <lib-product-card [product]="product"></lib-product-card>
+          }
+        </div>
+        <div class="flex justify-center mt-8">
+          <mat-paginator
+            [length]="totalProducts()"
+            [pageSize]="pageSize()"
+            [pageSizeOptions]="pageSizeOptions"
+            [pageIndex]="currentPage()-1"
+            (page)="onPageChange($event)"
+            aria-label="Select page"
+            class="custom-paginator"
+          >
+          </mat-paginator>
+        </div>
+      </div>
     </div>
   </div>
 </section>
