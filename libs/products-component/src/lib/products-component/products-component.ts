@@ -68,14 +68,14 @@ export class ProductsComponent implements OnInit {
    * @param limit number of items per page.
    */
   getAllProducts(page = 1, limit = this.pageSize()): void {
-    this.productsService.getAllProducts(page, limit).subscribe({
+    this.productsService.getProducts({ page, limit }).subscribe({
       next: (res) => {
         console.log(res);
         this.totalProducts.set(res.results);
         this.allProducts.set(res.data);
         this.currentPage.set(res.metadata.currentPage);
         this.pageSize.set(res.metadata.limit);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        // window.scrollTo({ top: 0, behavior: 'smooth' });
       },
       error: (err) => {
         console.log(err);
@@ -96,7 +96,11 @@ export class ProductsComponent implements OnInit {
     }
 
     this.productsService
-      .getCategoryProducts(categories, this.currentPage(), this.pageSize())
+      .getProducts({
+        category: categories,
+        page: this.currentPage(),
+        limit: this.pageSize(),
+      })
       .subscribe({
         next: (res) => {
           this.allProducts.set(res.data);
@@ -202,7 +206,8 @@ export class ProductsComponent implements OnInit {
    * Reset to the first page and sync the URL when search input changes.
    */
   onSearch(): void {
-    this.currentPage.set(1);
     this.updateUrl();
+    // this.currentPage.set(1);
+    // this.loadProductsByFilters();
   }
 }
