@@ -1,3 +1,4 @@
+import { DecimalPipe } from '@angular/common';
 import {
   Component,
   computed,
@@ -6,21 +7,28 @@ import {
   OnInit,
   signal,
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatSliderModule } from '@angular/material/slider';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Category, product } from '@org/models';
 import { IProductsQueryParams } from '@org/models';
 import { ProductCard } from '@org/productCard';
 import { Categories, Products } from '@org/services';
-
+import { debounceTime } from 'rxjs';
 /**
  * Container for browsing and filtering products with pagination and search.
  */
 @Component({
   selector: 'lib-products-component',
-  imports: [ProductCard, MatPaginatorModule, FormsModule],
+  imports: [
+    ProductCard,
+    MatPaginatorModule,
+    FormsModule,
+    DecimalPipe,
+    MatSliderModule,
+  ],
   templateUrl: './products-component.html',
   styleUrl: './products-component.css',
 })
@@ -37,9 +45,34 @@ export class ProductsComponent implements OnInit {
   totalProducts = signal(0);
   pageSizeOptions = [15, 20, 25];
   searchTerm = signal('');
+  sortBy = signal<string>('');
+
+  minPrice = signal(100);
+  maxPrice = signal(50000);
 
   categoryInfo = signal<Category[]>([]);
   selectedCategoryIds = signal<string[]>([]);
+
+  /**
+   * debounce for price to call api
+   */
+  constructor() {
+    toObservable(this.minPrice)
+      .pipe(debounceTime(400))
+      .subscribe((val) => {
+        this.minPrice.set(val);
+        this.updateUrl();
+        this.loadProductsByFilters();
+      });
+
+    toObservable(this.maxPrice)
+      .pipe(debounceTime(400))
+      .subscribe((val) => {
+        this.maxPrice.set(val);
+        this.updateUrl();
+        this.loadProductsByFilters();
+      });
+  }
 
   productList = computed(() => {
     const term = this.searchTerm().toLowerCase().trim();
@@ -63,24 +96,13 @@ export class ProductsComponent implements OnInit {
   }
 
   /**
-   * Fetch all products for the given page and page size.
-   * @param page current page index starting at 1.
-   * @param limit number of items per page.
+   *  to store the value to sortby
    */
-  getAllProducts(page = 1, limit = this.pageSize()): void {
-    this.productsService.getProducts({ page, limit }).subscribe({
-      next: (res) => {
-        console.log(res);
-        this.totalProducts.set(res.results);
-        this.allProducts.set(res.data);
-        this.currentPage.set(res.metadata.currentPage);
-        this.pageSize.set(res.metadata.limit);
-        // window.scrollTo({ top: 0, behavior: 'smooth' });
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+  onSortModelChange(value: string): void {
+    this.sortBy.set(value);
+    this.currentPage.set(1);
+    this.updateUrl();
+    this.loadProductsByFilters();
   }
 
   /**
@@ -90,16 +112,14 @@ export class ProductsComponent implements OnInit {
   loadProductsByFilters(): void {
     const categories = this.selectedCategoryIds();
 
-    if (categories.length === 0) {
-      this.getAllProducts(this.currentPage(), this.pageSize());
-      return;
-    }
-
     this.productsService
       .getProducts({
-        category: categories,
+        category: categories.length ? categories : undefined,
         page: this.currentPage(),
         limit: this.pageSize(),
+        sort: this.sortBy(),
+        minPrice: this.minPrice(),
+        maxPrice: this.maxPrice(),
       })
       .subscribe({
         next: (res) => {
@@ -129,12 +149,18 @@ export class ProductsComponent implements OnInit {
       .subscribe((params) => {
         const page = Number(params.get('page')) || 1;
         const limit = Number(params.get('limit')) || this.pageSize();
+        const minPrice = Number(params.get('minPrice')) || this.minPrice();
+        const maxPrice = Number(params.get('maxPrice')) || this.maxPrice();
         const search = params.get('search') || '';
+        const sort = params.get('sort') || '';
         const categories = params.getAll('category');
 
         this.currentPage.set(page);
         this.pageSize.set(limit);
+        this.minPrice.set(minPrice);
+        this.maxPrice.set(maxPrice);
         this.searchTerm.set(search);
+        this.sortBy.set(sort);
         this.selectedCategoryIds.set(categories);
 
         this.loadProductsByFilters();
@@ -156,6 +182,14 @@ export class ProductsComponent implements OnInit {
 
     if (this.selectedCategoryIds().length > 0) {
       queryParams.category = this.selectedCategoryIds();
+    }
+    if (this.sortBy()) {
+      queryParams.sort = this.sortBy();
+    }
+
+    if (this.minPrice() && this.maxPrice()) {
+      queryParams.minPrice = this.minPrice();
+      queryParams.maxPrice = this.maxPrice();
     }
 
     this.router.navigate([], {
@@ -200,14 +234,12 @@ export class ProductsComponent implements OnInit {
     this.selectedCategoryIds.set([]);
     this.currentPage.set(1);
     this.updateUrl();
-    this.getAllProducts(1, this.pageSize());
+    this.loadProductsByFilters();
   }
   /**
    * Reset to the first page and sync the URL when search input changes.
    */
   onSearch(): void {
     this.updateUrl();
-    // this.currentPage.set(1);
-    // this.loadProductsByFilters();
   }
 }

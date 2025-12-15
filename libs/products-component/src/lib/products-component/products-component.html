@@ -3,47 +3,83 @@
     <h2 class="title-style">Products List</h2>
     <input
       type="search"
-      class="w-1/2 mx-auto block p-2 rounded-lg shadow"
+      class="w-1/2 mx-auto block p-2 rounded-lg shadow mb-6"
       placeholder="Search here"
       [(ngModel)]="searchTerm"
       (ngModelChange)="onSearch()"
     />
-    <div class="grid grid-cols-12 gap-6">
-      <div class="hidden md:block col-span-12 md:col-span-2">
-        <!-- categories -->
-        <span class="font-semibold block">Categories</span>
-        <span
-          ><button
-            class="mt-4 text-sm text-red-500 underline"
-            (click)="resetCategory()"
-          >
-            Clear >
-          </button></span
-        >
-        @for (category of categoryInfo(); track category._id) {
-        <div>
-          <input
-            type="checkbox"
-            [id]="category._id"
-            [name]="category._id"
-            [checked]="selectedCategoryIds().includes(category._id)"
-            (change)="onCategoryToggle(category._id, $event)"
-          />
-          <label [for]="category._id">{{category.name}}</label>
-        </div>
-        }
 
-        <span class="font-semibold block mt-7">Price</span>
+    <div class="grid grid-cols-12 gap-6">
+      <!-- Sidebar Filters -->
+      <div class="hidden md:block col-span-12 md:col-span-3 lg:col-span-2">
+        <!-- Sort -->
+        <select
+          class="w-full rounded p-2 mb-6 border border-gray-300"
+          [ngModel]="sortBy()"
+          (ngModelChange)="onSortModelChange($event)"
+        >
+          <option value="">Sort by: Price</option>
+          <option value="price">Price: Low to High</option>
+          <option value="-price">Price: High to Low</option>
+        </select>
+
+        <!-- Categories -->
+        <div class="mb-6">
+          <div class="flex justify-between items-center mb-3">
+            <span class="font-semibold">Categories</span>
+            <button
+              class="text-xs text-red-500 underline"
+              (click)="resetCategory()"
+            >
+              Clear
+            </button>
+          </div>
+
+          <div class="space-y-2">
+            @for (category of categoryInfo(); track category._id) {
+            <div class="flex items-center">
+              <input
+                type="checkbox"
+                [id]="category._id"
+                [name]="category._id"
+                [checked]="selectedCategoryIds().includes(category._id)"
+                (change)="onCategoryToggle(category._id, $event)"
+                class="mr-2 cursor-pointer"
+              />
+              <label [for]="category._id" class="text-sm cursor-pointer">
+                {{category.name}}
+              </label>
+            </div>
+            }
+          </div>
+        </div>
+
+        <!-- Price Range Slider -->
+        <div class="mb-6">
+          <span class="font-semibold block mb-3">Price</span>
+
+          <!-- Price Display -->
+          <div class="text-sm font-semibold text-gray-600 mb-4">
+            {{ minPrice() | number }} EGP – {{ maxPrice() | number }} EGP
+          </div>
+
+          <!-- Slider Container -->
+          <mat-slider [min]="100" [max]="50000">
+            <input value="300" matSliderStartThumb [(ngModel)]="minPrice" />
+            <input value="400" matSliderEndThumb [(ngModel)]="maxPrice" />
+          </mat-slider>
+        </div>
       </div>
 
-      <div class="col-span-12 md:col-span-10">
-        <div
-          class="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
-        >
+      <!-- Products Grid -->
+      <div class="col-span-12 md:col-span-9 lg:col-span-10">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           @for (product of productList(); track product._id) {
           <lib-product-card [product]="product"></lib-product-card>
           }
         </div>
+
+        <!-- Pagination -->
         <div class="flex justify-center mt-8">
           <mat-paginator
             [length]="totalProducts()"

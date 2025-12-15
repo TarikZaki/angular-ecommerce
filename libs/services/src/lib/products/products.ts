@@ -15,9 +15,7 @@ export class Products {
   /**
    *  get products
    */
-  getProducts(
-    filters: IProductsQueryParams = {} as IProductsQueryParams
-  ): Observable<apiRes<product>> {
+  getProducts(filters: IProductsQueryParams): Observable<apiRes<product>> {
     const params: string[] = [];
 
     if (filters.page) {
