@@ -27,7 +27,7 @@ export class PopularProducts implements OnInit {
    * Fetch all products data.
    */
   getAllProductsData(): void {
-    this.products.getProducts({}).subscribe({
+    this.products.getProducts().subscribe({
       next: (res) => {
         this.productList = res.data;
         this.randomizedProducts = [...this.productList]

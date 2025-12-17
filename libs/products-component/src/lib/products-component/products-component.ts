@@ -74,6 +74,9 @@ export class ProductsComponent implements OnInit {
       });
   }
 
+  categoryInfo = signal<Category[]>([]);
+  selectedCategoryIds = signal<string[]>([]);
+
   productList = computed(() => {
     const term = this.searchTerm().toLowerCase().trim();
     if (!term) {
