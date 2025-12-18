@@ -1,19 +1,22 @@
 <mat-card class="card cursor-pointer mx-auto" appearance="outlined">
   <mat-card-header>
-    <div mat-card-avatar class="bg-cover"></div>
+    <div mat-card-avatar class="bg-cover">
+      <img [src]="product().category.image" class="rounded-full" alt="" />
+    </div>
     <mat-card-title>
       <span class="text-sm">{{ product().category.name }}</span></mat-card-title
     >
     <mat-card-subtitle>{{product().brand.name}}</mat-card-subtitle>
   </mat-card-header>
   <div class="relative">
-    <img
-      mat-card-image
-      [src]="product().imageCover"
-      [alt]="product().title"
-      class="rounded-none"
-    />
-
+    <div [routerLink]="['/details', product().slug, product()._id]">
+      <img
+        mat-card-image
+        [src]="product().imageCover"
+        [alt]="product().title"
+        class="rounded-none"
+      />
+    </div>
     <div class="absolute bottom-2 right-2 text-xs px-2 py-1 rounded">
       @if (localCartProduct().has(product()._id)) {
       <lib-product-controls

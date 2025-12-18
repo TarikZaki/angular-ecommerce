@@ -23,4 +23,10 @@ export const appRoutes: Route[] = [
     loadChildren: () =>
       import('@org/products-component').then((m) => m.productsComponentRoutes),
   },
+  {
+    path: 'details/:slug/:id',
+    canActivate: [authGuard],
+    loadChildren: () =>
+      import('@org/product-details').then((m) => m.ProductDetailsRoutes),
+  },
 ];

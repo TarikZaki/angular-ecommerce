@@ -13,7 +13,7 @@ export class Products {
   private readonly httpClient = inject(HttpClient);
 
   /**
-   *  get products
+   *  get all products
    */
   getProducts(filters: IProductsQueryParams): Observable<apiRes<product>> {
     const params: string[] = [];

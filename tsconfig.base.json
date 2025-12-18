@@ -22,6 +22,7 @@
       "@org/home": ["libs/home/src/index.ts"],
       "@org/models": ["libs/models/src/index.ts"],
       "@org/product-controls": ["libs/product-controls/src/index.ts"],
+      "@org/product-details": ["libs/product-details/src/index.ts"],
       "@org/productCard": ["libs/productCard/src/index.ts"],
       "@org/products-component": ["libs/products-component/src/index.ts"],
       "@org/services": ["libs/services/src/index.ts"],
