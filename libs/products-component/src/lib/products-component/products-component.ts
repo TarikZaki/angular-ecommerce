@@ -56,23 +56,12 @@ export class ProductsComponent implements OnInit {
   /**
    * debounce for price to call api
    */
-  constructor() {
-    toObservable(this.minPrice)
-      .pipe(debounceTime(400))
-      .subscribe((val) => {
-        this.minPrice.set(val);
-        this.updateUrl();
-        this.loadProductsByFilters();
-      });
-
-    toObservable(this.maxPrice)
-      .pipe(debounceTime(400))
-      .subscribe((val) => {
-        this.maxPrice.set(val);
-        this.updateUrl();
-        this.loadProductsByFilters();
-      });
-  }
+  private debouncedPriceChange = toObservable(
+    computed(() => ({
+      min: this.minPrice(),
+      max: this.maxPrice(),
+    }))
+  ).pipe(debounceTime(400), takeUntilDestroyed(this.destroyRef));
 
   productList = computed(() => {
     const term = this.searchTerm().toLowerCase().trim();
@@ -93,6 +82,10 @@ export class ProductsComponent implements OnInit {
   ngOnInit(): void {
     this.readFiltersFromUrl();
     this.getAllCategories();
+    this.debouncedPriceChange.subscribe(() => {
+      this.updateUrl();
+      this.loadProductsByFilters();
+    });
   }
 
   /**
