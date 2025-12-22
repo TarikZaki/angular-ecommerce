@@ -20,7 +20,7 @@ export class Navbar implements OnInit {
   isLoggedIn = input.required<boolean>();
   isMenuOpen = false;
   clickSignout = output<void>();
-
+  cartCount = this.controlsService.numOfCartItems;
   /**
    * Emits a sign out event to the parent component.
    */

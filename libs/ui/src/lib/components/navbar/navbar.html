@@ -16,17 +16,15 @@
     </ul>
     }
   </div>
+  <!-- Mobile menu button -->
   <div>
-    <!-- Mobile menu button -->
-
     <button (click)="toggleMenu()" class="lg:hidden flex flex-col gap-1">
       @for (bar of menuBars; track bar) {
       <span class="w-6 h-0.5 bg-gray-800 block"></span>
       }
     </button>
-
-    <!-- Right side: Social + Auth links -->
   </div>
+  <!-- Right side: Social + Auth links -->
   <div class="hidden lg:flex items-center gap-3">
     <ul class="flex items-center gap-6 mx-10">
       @for (s of socialLinks; track s.icon) {
@@ -39,6 +37,13 @@
       <li class="nav-link">
         @if (link.path === 'signout') {
         <button (click)="handleSignout()">{{ link.label }}</button>
+        }@else if (link.path === 'cart') {
+        <a [routerLink]="'/' + link.path" routerLinkActive="nav-active">
+          {{ link.label }}
+          <div class="w-16 h-16 rounded bg-green-600 inline p-1">
+            <span class="text-white"> {{ cartCount() }}</span>
+          </div>
+        </a>
         } @else {
         <a [routerLink]="'/' + link.path" routerLinkActive="nav-active">
           {{ link.label }}
