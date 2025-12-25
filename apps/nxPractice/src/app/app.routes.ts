@@ -1,5 +1,5 @@
 import { Route } from '@angular/router';
-import { authGuard, isLogginGuard } from '@org/guards';
+import { authGuard, cartIdGuard, isLogginGuard } from '@org/guards';
 
 export const appRoutes: Route[] = [
   {
@@ -31,7 +31,7 @@ export const appRoutes: Route[] = [
   },
   {
     path: 'checkout/:id',
-    canActivate: [authGuard],
+    canActivate: [authGuard, cartIdGuard],
     loadChildren: () => import('@org/checkout').then((m) => m.checkoutRoutes),
   },
 ];
