@@ -29,4 +29,9 @@ export const appRoutes: Route[] = [
     loadChildren: () =>
       import('@org/product-details').then((m) => m.ProductDetailsRoutes),
   },
+  {
+    path: 'checkout/:id',
+    canActivate: [authGuard],
+    loadChildren: () => import('@org/checkout').then((m) => m.checkoutRoutes),
+  },
 ];
