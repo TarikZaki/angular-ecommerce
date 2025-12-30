@@ -5,7 +5,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Button, Input } from '@org/ui';
 import { finalize, map } from 'rxjs';
 
@@ -24,6 +24,7 @@ export class Checkout {
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly creatOrder = inject(CreatOrder);
+  private readonly router = inject(Router);
   id = toSignal(
     this.activatedRoute.paramMap.pipe(map((params) => params.get('id'))),
     { initialValue: null }
@@ -57,8 +58,8 @@ export class Checkout {
         .createCashOrder(this.id(), formValue)
         .pipe(finalize(() => this.isLoading.set(false)))
         .subscribe({
-          next: (res) => {
-            console.log(res);
+          next: () => {
+            this.router.navigate(['/allorders']);
           },
         });
     } else if (this.checkoutForm.get('paymentMethod')?.value === 'visa') {
@@ -68,9 +69,8 @@ export class Checkout {
         .subscribe({
           next: (res) => {
             console.log(res);
-
             if (res.status === 'success') {
-              window.open(res.session.url);
+              window.open(res.session.url, '_self');
             }
           },
         });
