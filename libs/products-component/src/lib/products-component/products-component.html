@@ -1,6 +1,8 @@
 <section class="section-style">
   <div class="container px-4 sm:px-6 lg:px-8">
     <h2 class="title-style">Products List</h2>
+
+    <!-- Search -->
     <input
       type="search"
       class="w-1/2 mx-auto block p-2 rounded-lg shadow mb-6"
@@ -8,33 +10,10 @@
       [(ngModel)]="searchTerm"
       (ngModelChange)="onSearch()"
     />
-    <div class="grid grid-cols-12 gap-6">
-      <div class="hidden md:block col-span-12 md:col-span-2">
-        <!-- categories -->
-        <span class="font-semibold block">Categories</span>
-        <span
-          ><button
-            class="mt-4 text-sm text-red-500 underline"
-            (click)="resetCategory()"
-          >
-            Clear >
-          </button></span
-        >
-        @for (category of categoryInfo(); track category._id) {
-        <div>
-          <input
-            type="checkbox"
-            [id]="category._id"
-            [name]="category._id"
-            [checked]="selectedCategoryIds().includes(category._id)"
-            (change)="onCategoryToggle(category._id, $event)"
-          />
-          <label [for]="category._id">{{category.name}}</label>
-        </div>
-        }
 
+    <!-- Main Grid -->
     <div class="grid grid-cols-12 gap-6">
-      <!-- Sidebar Filters -->
+      <!-- Sidebar -->
       <div class="hidden md:block col-span-12 md:col-span-3 lg:col-span-2">
         <!-- Sort -->
         <select
@@ -71,32 +50,31 @@
                 class="mr-2 cursor-pointer"
               />
               <label [for]="category._id" class="text-sm cursor-pointer">
-                {{category.name}}
+                {{ category.name }}
               </label>
             </div>
             }
           </div>
         </div>
 
-        <!-- Price Range Slider -->
+        <!-- Price Range -->
         <div class="mb-6">
           <span class="font-semibold block mb-3">Price</span>
 
-          <!-- Price Display -->
           <div class="text-sm font-semibold text-gray-600 mb-4">
             {{ minPrice() | number }} EGP – {{ maxPrice() | number }} EGP
           </div>
 
-          <!-- Slider Container -->
           <mat-slider [min]="100" [max]="50000">
-            <input value="300" matSliderStartThumb [(ngModel)]="minPrice" />
-            <input value="400" matSliderEndThumb [(ngModel)]="maxPrice" />
+            <input matSliderStartThumb [(ngModel)]="minPrice" />
+            <input matSliderEndThumb [(ngModel)]="maxPrice" />
           </mat-slider>
         </div>
       </div>
 
-      <!-- Products Grid -->
+      <!-- Products Section -->
       <div class="col-span-12 md:col-span-9 lg:col-span-10">
+        <!-- Products Grid -->
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           @for (product of productList(); track product._id) {
           <lib-product-card [product]="product"></lib-product-card>
@@ -109,7 +87,7 @@
             [length]="totalProducts()"
             [pageSize]="pageSize()"
             [pageSizeOptions]="pageSizeOptions"
-            [pageIndex]="currentPage()-1"
+            [pageIndex]="currentPage() - 1"
             (page)="onPageChange($event)"
             aria-label="Select page"
             class="custom-paginator"

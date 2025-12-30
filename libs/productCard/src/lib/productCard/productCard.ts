@@ -13,6 +13,7 @@ import {
   MatCardSubtitle,
   MatCardTitle,
 } from '@angular/material/card';
+import { RouterLink } from '@angular/router';
 import { product } from '@org/models';
 import { ProductControls } from '@org/product-controls';
 import { CartService, ControlsService } from '@org/services';
@@ -34,6 +35,7 @@ import { ToastService } from 'ngx-toastr-notifier';
     MatCardAvatar,
     Button,
     ProductControls,
+    RouterLink,
   ],
   templateUrl: './productCard.html',
   styleUrl: './productCard.css',

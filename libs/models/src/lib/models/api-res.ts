@@ -3,6 +3,12 @@ export interface apiRes<T> {
   metadata: Metadata;
   data: T[];
 }
+
+export interface ApiSingleRes<T> {
+  results: number;
+  metadata: Metadata;
+  data: T;
+}
 export interface Metadata {
   currentPage: number;
   numberOfPages: number;
