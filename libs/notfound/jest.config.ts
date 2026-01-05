@@ -2,7 +2,7 @@ export default {
   displayName: 'notfound',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: '../../coverage/lib/notfound',
+  coverageDirectory: '../../coverage/libs/notfound',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',

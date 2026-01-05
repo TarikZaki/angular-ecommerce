@@ -1,3 +1,5 @@
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PopularCategories } from './popular-categories';
@@ -9,6 +11,7 @@ describe('PopularCategories', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [PopularCategories],
+      providers: [provideHttpClient(), provideHttpClientTesting()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(PopularCategories);

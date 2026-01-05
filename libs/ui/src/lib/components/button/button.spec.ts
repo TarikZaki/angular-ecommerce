@@ -17,18 +17,11 @@ describe('Button', () => {
 
     fixture.detectChanges();
   });
+  it('should emit clicked event on click', () => {
+    jest.spyOn(component.clicked, 'emit');
+    const buttonEl = fixture.debugElement.query(By.css('button'));
+    buttonEl.triggerEventHandler('click');
 
-  it('should reflect button type in the template', () => {
-    // 1️⃣ Set the input value
-    fixture.componentRef.setInput('type', 'submit');
-    fixture.detectChanges(); // update the template
-
-    // 2️⃣ Query the DOM
-    const buttonEl: HTMLButtonElement = fixture.debugElement.query(
-      By.css('button')
-    ).nativeElement;
-
-    // 3️⃣ Assert the result
-    expect(buttonEl.type).toBe('submit');
+    expect(component.clicked.emit).toHaveBeenCalled();
   });
 });
