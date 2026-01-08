@@ -21,6 +21,7 @@
   <!-- [routerLink]="['/checkout', cartDetails._id]" -->
   <button
     class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-4 px-6 rounded-lg transition-colors cursor-pointer mb-4"
+    [routerLink]="['/checkout', cart()?._id]"
   >
     Proceed To CheckOut
   </button>

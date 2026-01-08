@@ -1,0 +1,115 @@
+<section class="section-style">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <!--  heading -->
+    <div
+      class="bg-white p-6 shadow rounded-lg mb-4 lg:w-1/2 lg:mx-auto flex justify-between items-center"
+    >
+      <h2 class="font-semibold text-2xl">Checkout</h2>
+      <span
+        class="bg-green-100 text-green-700 px-3 py-1 rounded-full font-medium hidden sm:inline-block"
+      >
+        <i class="fas fa-shield-alt mr-1"></i>
+        Secure Checkout
+      </span>
+    </div>
+
+    <!-- Shipping Information -->
+    <form [formGroup]="checkoutForm">
+      <div class="bg-white p-6 shadow rounded-lg mb-4 lg:w-1/2 lg:mx-auto">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">
+          <i class="fas fa-shipping-fast text-green-600 mr-3"></i>
+          Shipping Information
+        </h2>
+        <div class="block">
+          <div formGroupName="shippingAddress">
+            <lib-input
+              formControlName="details"
+              [typeInput]="'textaria'"
+              [placeholder]="'write details'"
+              [label]="'details'"
+            ></lib-input>
+            <lib-input
+              formControlName="city"
+              [typeInput]="'text'"
+              [placeholder]="'write your city'"
+              [label]="'city'"
+            ></lib-input>
+            <lib-input
+              formControlName="phone"
+              [typeInput]="'tel'"
+              [placeholder]="'write a phone number'"
+              [label]="'phone'"
+            ></lib-input>
+          </div>
+        </div>
+      </div>
+
+      <!-- Payment Method -->
+      <div class="bg-white p-6 shadow rounded-lg mb-4 lg:w-1/2 lg:mx-auto">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">
+          <i class="fas fa-credit-card text-green-600 mr-3"></i>
+          Payment Method
+        </h2>
+        <div class="space-y-4">
+          <!-- Cash on Delivery -->
+          <div
+            class="border border-gray-300 rounded-lg p-4 hover:border-green-500 transition-colors cursor-pointer"
+            [class.selected]="checkoutForm.get('paymentMethod')?.value === 'cash'"
+          >
+            <label class="flex items-center cursor-pointer">
+              <input
+                type="radio"
+                formControlName="paymentMethod"
+                value="cash"
+                class="text-green-600 focus:ring-green-500 accent-green-600"
+              />
+              <div class="ml-3">
+                <div class="flex items-center">
+                  <i class="fas fa-money-bill-wave text-green-600 mr-2"></i>
+                  <span class="font-semibold text-gray-800"
+                    >Cash on Delivery</span
+                  >
+                </div>
+                <p class="text-sm text-gray-600 mt-1">
+                  Pay when you receive your order
+                </p>
+              </div>
+            </label>
+          </div>
+          <!-- Credit Card -->
+          <div
+            class="border border-gray-300 rounded-lg p-4 hover:border-green-500 transition-colors cursor-pointer"
+            [class.selected]="checkoutForm.get('paymentMethod')?.value === 'visa'"
+          >
+            <label class="flex items-center cursor-pointer">
+              <input
+                type="radio"
+                formControlName="paymentMethod"
+                value="visa"
+                class="text-green-600 focus:ring-green-500 accent-green-600"
+              />
+              <div class="ml-3">
+                <div class="flex items-center">
+                  <i class="fas fa-credit-card text-green-600 mr-2"></i>
+                  <span class="font-semibold text-gray-800"
+                    >Credit/Debit Card</span
+                  >
+                </div>
+                <p class="text-sm text-gray-600 mt-1">
+                  Pay with your credit or debit card
+                </p>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+    </form>
+    <!-- button -->
+
+    <div class="bg-white p-6 shadow rounded-lg mb-4 lg:w-1/2 lg:mx-auto">
+      <lib-button [loading]="isLoading()" (clicked)="onSubmitForm()"
+        >Place Order</lib-button
+      >
+    </div>
+  </div>
+</section>
