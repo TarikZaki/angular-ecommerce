@@ -22,12 +22,12 @@
         </h2>
         <div class="block">
           <div formGroupName="shippingAddress">
-            <lib-input
+            <lib-text-input
               formControlName="details"
-              [typeInput]="'textaria'"
               [placeholder]="'write details'"
               [label]="'details'"
-            ></lib-input>
+              [rows]="3"
+            ></lib-text-input>
             <lib-input
               formControlName="city"
               [typeInput]="'text'"

@@ -1,0 +1,17 @@
+<mat-form-field>
+  <mat-label>{{ label() }}</mat-label>
+  <textarea
+    matInput
+    [placeholder]="placeholder()"
+    [value]="value()"
+    [disabled]="disabled()"
+    [rows]="rows()"
+    (input)="onInputChange($event)"
+    (blur)="onBlur()"
+  ></textarea>
+  @if (hasError) {
+  <div class="text-red-600 text-md mt-1">
+    <pre> {{ ngControl?.control?.errors | errorMessage : label() }}</pre>
+  </div>
+  }
+</mat-form-field>
