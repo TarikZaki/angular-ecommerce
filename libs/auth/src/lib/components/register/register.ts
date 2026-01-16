@@ -68,7 +68,6 @@ export class Register {
             this.isLoading.set(false);
           },
           error: (err) => {
-            console.log(err);
             this.isLoading.set(false);
             this.msgError.set(err.error.message || 'Something went wrong');
           },

@@ -1,14 +1,14 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { ValidationErrors } from '@angular/forms';
 
+/**
+ *  Pipe that converts Angular form ValidationErrors into user-friendly messages.
+ */
 @Pipe({
   name: 'errorMessage',
   standalone: true,
   pure: false,
 })
-/**
- * Pipe that converts Angular form ValidationErrors into user-friendly messages.
- */
 export class ErrorMessagePipe implements PipeTransform {
   /**
    * Builds a human-readable error message string based on Angular form ValidationErrors.
