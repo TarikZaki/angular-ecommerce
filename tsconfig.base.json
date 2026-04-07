@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@org/allorders": ["libs/allorders/src/index.ts"],
       "@org/auth": ["libs/auth/src/index.ts"],
       "@org/cart": ["libs/cart/src/index.ts"],
       "@org/checkout": ["libs/checkout/src/index.ts"],
@@ -22,6 +23,7 @@
       "@org/headers": ["libs/interceptors/src/index.ts"],
       "@org/home": ["libs/home/src/index.ts"],
       "@org/models": ["libs/models/src/index.ts"],
+      "@org/notfound": ["libs/notfound/src/index.ts"],
       "@org/product-controls": ["libs/product-controls/src/index.ts"],
       "@org/product-details": ["libs/product-details/src/index.ts"],
       "@org/productCard": ["libs/productCard/src/index.ts"],

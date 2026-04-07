@@ -70,12 +70,12 @@ export class Input implements ControlValueAccessor {
    *
    * @param event - Input event emitted by the native input element.
    */
-  onInputChange(event: Event) {
+  onInputChange(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
     this.value.set(value);
     this.onChange?.(value);
   }
-  private onChange?: (value: any) => void;
+  private onChange?: (value: string) => void;
   private onTouched?: () => void;
 
   /**
@@ -99,7 +99,7 @@ export class Input implements ControlValueAccessor {
    *
    * @param fn - Change propagation function.
    */
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (value: string) => void): void {
     this.onChange = fn;
   }
 
@@ -108,7 +108,7 @@ export class Input implements ControlValueAccessor {
    *
    * @param fn - Touched propagation function.
    */
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
   /**

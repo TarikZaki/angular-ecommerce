@@ -3,7 +3,12 @@
 >
   <!-- Left side: Logo + Main links -->
   <div class="flex items-center gap-3">
-    <img src="images/freshcart-logo.svg" alt="" class="" />
+    <img
+      src="images/freshcart-logo.svg"
+      alt=""
+      routerLink="/home"
+      class="cursor-pointer"
+    />
     @if (isLoggedIn()) {
     <ul class="hidden lg:flex items-center gap-6">
       @for (link of mainLinks; track link.label) {
