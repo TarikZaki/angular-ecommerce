@@ -1,0 +1,58 @@
+<section class="section-style">
+  <div class="container px-4 sm:px-6 lg:px-8">
+    <h2 class="title-style">Categories List</h2>
+
+    <div
+      class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-4 md:gap-5 lg:gap-6 items-stretch"
+    >
+      @for (category of allCategories(); track category._id) {
+        <div
+          class="category-card border border-green-400/50 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group cursor-pointer bg-white"
+          [routerLink]="['/products']"
+          [queryParams]="{ category: category._id }"
+        >
+          <div class="category-card__image relative">
+            <img
+              [src]="category.image"
+              [alt]="category.name"
+              class="transition-transform duration-300 group-hover:scale-105"
+            />
+
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4"
+            >
+              <div>
+                <h3 class="text-white font-bold text-lg">{{ category.name }}</h3>
+                <p class="text-white/90 text-sm">
+                  <i class="fas fa-box mr-1"></i> Explore Products
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="category-card__body p-4">
+            <div class="flex justify-between items-center mb-3">
+              <h4 class="font-semibold text-gray-800 text-lg truncate">
+                {{ category.name }}
+              </h4>
+              <i
+                class="fas fa-arrow-right text-green-500 transition-transform duration-300 group-hover:translate-x-1"
+              ></i>
+            </div>
+
+            <p class="text-gray-500 text-sm mb-4 line-clamp-2 min-h-[2.5rem]">
+              Discover amazing {{ category.name.toLowerCase() }} products
+            </p>
+
+            <span
+              class="category-card__action w-full inline-flex items-center justify-center bg-gradient-to-r from-green-500 to-green-600 group-hover:from-green-600 group-hover:to-green-700 text-white font-semibold py-2.5 px-4 rounded-md transition-all duration-300 group-hover:-translate-y-0.5 group-hover:shadow-lg"
+            >
+              <i class="fas fa-shopping-bag mr-2"></i>
+              Browse Category
+            </span>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
