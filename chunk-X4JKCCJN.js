@@ -1,0 +1,1 @@
+import{Mb as n,Nb as i,lc as f,pb as e}from"./chunk-WS4V2ZIY.js";import"./chunk-4CLCTAJ7.js";var s=class t{static \u0275fac=function(o){return new(o||t)};static \u0275cmp=e({type:t,selectors:[["lib-notfound"]],decls:2,vars:0,template:function(o,a){o&1&&(n(0,"p"),f(1,"Notfound works!"),i())},encapsulation:2})};export{s as Notfound};
