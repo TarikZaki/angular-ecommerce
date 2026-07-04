@@ -21,7 +21,7 @@ jobs:
 
       - run: npm ci
 
-      - run: npx nx build nxPractice --configuration=production --base-href="/NxxProject/"
+      - run: npx nx build nxPractice --configuration=production --base-href="/angular-ecommerce/"
 
       - run: cp dist/apps/nxPractice/browser/index.html dist/apps/nxPractice/browser/404.html
 
