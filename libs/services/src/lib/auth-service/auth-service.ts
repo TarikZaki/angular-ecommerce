@@ -7,8 +7,8 @@ import {
   LoginRequest,
   RegisterRequest,
 } from '@org/models';
-import { CookieService } from 'ngx-cookie-service';
 import { jwtDecode } from 'jwt-decode';
+import { CookieService } from 'ngx-cookie-service';
 import { catchError, map, Observable, of, tap } from 'rxjs';
 
 /**
