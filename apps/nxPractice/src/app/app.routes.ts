@@ -41,6 +41,7 @@ export const appRoutes: Route[] = [
   },
   {
     path: '**',
-    loadChildren: () => import('@org/notfound').then((m) => m.Notfound),
+    loadComponent: () => import('@org/notfound').then((m) => m.Notfound),
+    title: 'Page Not Found',
   },
 ];
