@@ -54,7 +54,7 @@ export class Navbar {
     { label: 'Home', path: 'home' },
     { label: 'Products', path: 'products' },
     { label: 'Categories', path: 'categories' },
-    { label: 'Brands', path: 'brands' },
+    // { label: 'Brands', path: 'brands' },
   ];
 
   socialLinks = [
