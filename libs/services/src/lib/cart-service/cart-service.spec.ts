@@ -4,7 +4,7 @@ import {
   provideHttpClientTesting,
 } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { AddtocartResponse, GetUserCart } from '@org/models';
+import { AddtocartResponse, GetUserCart, Order } from '@org/models';
 
 import { CartService } from './cart-service';
 
@@ -99,5 +99,21 @@ describe('CartService', () => {
     expect(req.request.body).toEqual({ count });
 
     req.flush(mockResponse);
+  });
+
+  it('should get user orders as a raw array', () => {
+    const userId = '6428ebc6dc1175abc65ca0b9';
+    const mockOrders = [{ _id: 'order1' }] as Order[];
+
+    service.getUserOrders(userId).subscribe((res) => {
+      expect(res).toEqual(mockOrders);
+    });
+
+    const req = httpMock.expectOne(
+      `https://ecommerce.routemisr.com/api/v1/orders/user/${userId}`
+    );
+    expect(req.request.method).toBe('GET');
+
+    req.flush(mockOrders);
   });
 });

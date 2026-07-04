@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { AddtocartResponse, GetUserCart } from '@org/models';
-import { Observable } from 'rxjs';
+import { AddtocartResponse, GetUserCart, Order } from '@org/models';
+import { map, Observable } from 'rxjs';
 
 /**
  *  Cart service
@@ -53,5 +53,18 @@ export class CartService {
       `https://ecommerce.routemisr.com/api/v1/cart/${id}`,
       { count: count }
     );
+  }
+
+  /**
+   * Get all orders for a specific user.
+   */
+  getUserOrders(userId: string): Observable<Order[]> {
+    return this.httpClient
+      .get<Order[] | { data: Order[] }>(
+        `https://ecommerce.routemisr.com/api/v1/orders/user/${userId}`
+      )
+      .pipe(
+        map((res) => (Array.isArray(res) ? res : (res.data ?? [])))
+      );
   }
 }

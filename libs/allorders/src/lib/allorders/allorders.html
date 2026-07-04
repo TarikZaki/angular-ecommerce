@@ -1,1 +1,130 @@
-<p>Allorders works!</p>
+<section class="bg-gray-200 py-8">
+  <div class="w-11/12 mx-auto max-w-6xl">
+    <!-- Page Header -->
+    <div class="bg-white rounded-lg shadow p-6 mb-6">
+      <h2 class="text-2xl md:text-3xl font-bold text-gray-800 flex items-center">
+        <i class="fas fa-box text-green-600 mr-3"></i>
+        My Orders
+      </h2>
+    </div>
+
+    @if (isLoading()) {
+      <div class="bg-white rounded-lg shadow p-8 text-center">
+        <p class="text-gray-600 text-lg">Loading your orders...</p>
+      </div>
+    } @else if (orders().length === 0) {
+      <div class="bg-white rounded-lg shadow p-8 text-center">
+        <i class="fas fa-shopping-bag text-4xl text-gray-400 mb-4"></i>
+        <p class="text-gray-600 text-lg">You have no orders yet.</p>
+      </div>
+    } @else {
+      <div>
+        @for (order of orders(); track order._id) {
+          <div
+            class="bg-white rounded-lg shadow hover:shadow-lg transition-shadow p-4 md:p-6 mb-6"
+          >
+            <!-- Order Header -->
+            <div class="flex flex-col gap-4 mb-6">
+              <div>
+                <h3
+                  class="text-base md:text-xl font-semibold text-gray-800 mb-2 break-all"
+                >
+                  Order #{{ order._id }}
+                </h3>
+                <div class="flex items-center gap-2 mb-3">
+                  <span class="text-xs md:text-sm text-gray-600">Payment:</span>
+                  <span
+                    class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs md:text-sm font-semibold"
+                  >
+                    {{ order.paymentMethodType }}
+                  </span>
+                </div>
+                <div
+                  class="flex flex-wrap items-center gap-2 md:gap-4 text-xs md:text-sm text-gray-600"
+                >
+                  <span class="flex items-center">
+                    <i class="fas fa-calendar-alt mr-1"></i>
+                    {{ order.createdAt | date: 'dd/MM/yyyy' }}
+                  </span>
+                  <span class="flex items-center">
+                    <i class="fas fa-clock mr-1"></i>
+                    {{ order.createdAt | date: 'shortTime' }}
+                  </span>
+                </div>
+              </div>
+              <div class="text-left md:text-right">
+                <div class="text-xl md:text-2xl font-bold text-green-600">
+                  {{
+                    order.totalOrderPrice | currency: 'EGP' : 'symbol' : '1.0-0'
+                  }}
+                </div>
+                <p class="text-xs md:text-sm text-gray-600">Total Amount</p>
+              </div>
+            </div>
+
+            <!-- Order Items -->
+            <div class="border-t border-gray-200 pt-6">
+              <h4
+                class="text-sm md:text-base font-semibold text-gray-800 mb-4 flex items-center"
+              >
+                <i class="fas fa-shopping-bag mr-2"></i>
+                Products ({{ order.cartItems.length || 0 }} items)
+              </h4>
+
+              <div class="space-y-4">
+                @for (item of order.cartItems; track item._id) {
+                  <div
+                    class="flex flex-col sm:flex-row items-start sm:items-center gap-3 md:gap-4 p-3 md:p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                  >
+                    <!-- Product Image -->
+                    <div class="flex-shrink-0">
+                      <img
+                        [src]="item.product.imageCover"
+                        [alt]="item.product.title"
+                        class="w-16 h-16 object-contain rounded-lg border"
+                      />
+                    </div>
+
+                    <!-- Product Details -->
+                    <div class="flex-grow min-w-0">
+                      <h5
+                        class="font-semibold text-sm md:text-base text-gray-800 mb-1 line-clamp-2"
+                      >
+                        {{ item.product.title }}
+                      </h5>
+                      <div
+                        class="flex flex-wrap items-center gap-3 md:gap-6 text-xs md:text-sm text-gray-600"
+                      >
+                        <span class="flex items-center">
+                          <i class="fas fa-hashtag mr-1"></i>
+                          Qty: {{ item.count }}
+                        </span>
+                        <span class="flex items-center">
+                          <i class="fas fa-tag mr-1"></i>
+                          {{
+                            item.price | currency: 'EGP' : 'symbol' : '1.0-0'
+                          }}
+                          each
+                        </span>
+                      </div>
+                    </div>
+
+                    <!-- Item Total -->
+                    <div class="text-left sm:text-right flex-shrink-0">
+                      <div class="text-base md:text-lg font-bold text-green-600">
+                        {{
+                          item.price * item.count
+                            | currency: 'EGP' : 'symbol' : '1.0-0'
+                        }}
+                      </div>
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</section>

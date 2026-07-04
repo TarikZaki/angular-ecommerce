@@ -7,4 +7,5 @@ export * from './lib/models/categories';
 export * from './lib/models/common';
 export * from './lib/models/create-orders';
 export * from './lib/models/iproducts-query-params';
+export * from './lib/models/order';
 export * from './lib/models/product';

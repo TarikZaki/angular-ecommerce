@@ -1,8 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthResponse, LoginRequest, RegisterRequest } from '@org/models';
+import {
+  AuthResponse,
+  DecodedToken,
+  LoginRequest,
+  RegisterRequest,
+} from '@org/models';
 import { CookieService } from 'ngx-cookie-service';
+import { jwtDecode } from 'jwt-decode';
 import { catchError, map, Observable, of, tap } from 'rxjs';
 
 /**
@@ -66,6 +72,23 @@ export class AuthService {
     this.cookieService.delete('token');
     this.isLoggedIn.set(false);
     this.router.navigate(['/login']);
+  }
+
+  /**
+   * Decodes the JWT token stored in cookies.
+   */
+  decodeToken(): DecodedToken | null {
+    try {
+      const token = this.cookieService.get('token');
+      if (!token) {
+        return null;
+      }
+
+      return jwtDecode<DecodedToken>(token);
+    } catch {
+      this.signout();
+      return null;
+    }
   }
 
   /**
