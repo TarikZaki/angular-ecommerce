@@ -43,6 +43,13 @@ export class Navbar {
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
   }
+
+  /**
+   * Closes the mobile menu.
+   */
+  closeMenu(): void {
+    this.isMenuOpen = false;
+  }
   mainLinks = [
     { label: 'Home', path: 'home' },
     { label: 'Products', path: 'products' },

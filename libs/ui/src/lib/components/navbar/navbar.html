@@ -68,7 +68,7 @@
   <ul class="flex flex-col gap-4 mb-6">
     @for (link of mainLinks; track link.label) {
     <li class="nav-link">
-      <a [routerLink]=" '/'+link.path" routerLinkActive="nav-active">
+      <a [routerLink]=" '/'+link.path" routerLinkActive="nav-active" (click)="closeMenu()">
         {{ link.label }}
       </a>
     </li>
@@ -85,9 +85,9 @@
     @for (link of authLinks; track link.label) {
     <li class="nav-link">
       @if (link.path === 'signout') {
-      <button (click)="handleSignout()">{{ link.label }}</button>
+      <button (click)="handleSignout(); closeMenu()">{{ link.label }}</button>
       } @else {
-      <a [routerLink]=" '/'+link.path" routerLinkActive="nav-active">
+      <a [routerLink]=" '/'+link.path" routerLinkActive="nav-active" (click)="closeMenu()">
         {{ link.label }}
       </a>
       }
