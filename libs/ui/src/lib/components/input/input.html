@@ -1,15 +1,5 @@
 <mat-form-field class="w-full custom-input">
   <mat-label>{{label()}}</mat-label>
-  @if (typeInput() === 'textaria') {
-  <textarea
-    matInput
-    [placeholder]="placeholder()"
-    [value]="value()"
-    [disabled]="disabled()"
-    (input)="onInputChange($event)"
-    (blur)="onBlur()"
-  ></textarea>
-  } @else {
   <input
     matInput
     [type]="typeInput() === 'password' ? (hide() ? 'password' : 'text') : typeInput()"
@@ -19,7 +9,7 @@
     (input)="onInputChange($event)"
     (blur)="onBlur()"
   />
-  } @if (hasError) {
+  @if (hasError) {
   <div class="text-red-600 text-md mt-1">
     <pre> {{ ngControl?.control?.errors | errorMessage : label() }}</pre>
   </div>

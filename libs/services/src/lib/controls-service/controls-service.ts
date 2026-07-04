@@ -33,8 +33,7 @@ export class ControlsService {
         this.cart.set(res.data);
         this.numOfCartItems.set(res.numOfCartItems);
       },
-      error: (err) => {
-        console.error('Failed to load cart:', err);
+      error: () => {
         this.cart.set(null);
         this.localCartProducts.set(new Map());
       },

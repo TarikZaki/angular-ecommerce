@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Button, Input } from '@org/ui';
+import { Button, Input, TextInput } from '@org/ui';
 import { finalize, map } from 'rxjs';
 
 import { CreatOrder } from './../service/creat-order';
@@ -16,7 +16,7 @@ import { CreatOrder } from './../service/creat-order';
  */
 @Component({
   selector: 'lib-checkout',
-  imports: [Input, ReactiveFormsModule, Button],
+  imports: [Input, ReactiveFormsModule, Button, TextInput],
   templateUrl: './checkout.html',
   styleUrl: './checkout.css',
 })

@@ -1,13 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  AuthResponse,
-  DecodedToken,
-  LoginRequest,
-  RegisterRequest,
-} from '@org/models';
-import { jwtDecode } from 'jwt-decode';
+import { AuthResponse, LoginRequest, RegisterRequest } from '@org/models';
 import { CookieService } from 'ngx-cookie-service';
 import { catchError, map, Observable, of, tap } from 'rxjs';
 
@@ -87,18 +81,5 @@ export class AuthService {
           return of(false);
         })
       );
-  }
-  /**
-   * decode token to get UserId
-   */
-  decodeToken(): DecodedToken | null {
-    try {
-      const token = this.getToken;
-      const decoded = jwtDecode<DecodedToken>(token);
-      return decoded;
-    } catch {
-      this.signout();
-      return null;
-    }
   }
 }
