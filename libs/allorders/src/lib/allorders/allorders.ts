@@ -39,7 +39,12 @@ export class Allorders implements OnInit {
   getAllUserOrders(userId: string): void {
     this.cartService.getUserOrders(userId).subscribe({
       next: (res) => {
-        this.orders.set(res);
+        this.orders.set(
+          [...res].sort(
+            (a, b) =>
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          )
+        );
         this.isLoading.set(false);
       },
       error: () => {
