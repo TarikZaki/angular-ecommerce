@@ -7,6 +7,9 @@
     "start": "nx serve nxPractice",
     "build": "nx build nxPractice",
     "test": "nx test nxPractice",
+    "test:all": "nx run-many --target=test --all",
+    "test:coverage": "jest --coverage --passWithNoTests",
+    "test:coverage:watch": "jest --coverage --watch --passWithNoTests",
     "lint": "nx lint nxPractice"
   },
   "private": true,
